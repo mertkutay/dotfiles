@@ -1,0 +1,50 @@
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
+
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+vnw_script="/usr/local/bin/virtualenvwrapper.sh"
+if [[ -e "$vnw_script" ]]; then
+    source "$vnw_script"
+fi
+
+vew_on_path=$(type virtualenvwrapper >/dev/null; echo $?)
+if [[ "$vew_on_path" -eq 0 || -e "$vnw_script" ]]; then
+  if [[ ! -d "$HOME/.virtualenvs" ]]; then
+    mkdir "$HOME/.virtualenvs"
+  fi
+  export WORKON_HOME="$HOME/.virtualenvs"
+fi
+
+function nicediff {
+  diff -W `tput cols` -y "$@" | colordiff | less
+}
+
+alias pip='pip3'
+alias python='python3'
+alias vim='nvim'
+alias ta='tmux attach'
+alias tl='tmux ls'
+alias urldecode='python -c "import sys, urllib as ul; print ul.unquote_plus(sys.argv[1])"'
+alias ssh='ssh -A'
+alias plus='python3 manage.py shell_plus'
+
+function top() {
+  if [ $# -eq 0 ]; then
+    /usr/bin/top -o cpu
+  else
+    /usr/bin/top "$@"
+  fi
+}
+
+alias l="ls -lhFG"
+alias la="ls -lhFGA"
+alias ltr="ls -lhFGtr"
+alias lsr="ls -lhFGSr"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+export COMPOSE_FILE=local.yml
+export DJANGO_READ_DOT_ENV_FILE=true

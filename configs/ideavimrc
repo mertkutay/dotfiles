@@ -1,0 +1,37 @@
+set number relativenumber
+set nu rnu
+
+set splitbelow
+set splitright
+
+set incsearch
+
+let mapleader = ","
+
+nmap <Leader>w :w<CR>
+nmap <Leader>f :action FileStructurePopup<CR>
+nmap <C-l> zz
+nmap <C-p> :action SearchEverywhere<CR>
+imap <C-l> <ESC>zza
+imap <C-e> <Esc>A
+nmap <Leader>. :e #<CR>
+nnoremap <Leader>si :action SelectIn<CR>
+nmap <Leader>rr :action Refactorings.QuickListPopupAction<CR>
+nmap ]e :action GotoNextError<CR>
+nmap [e :action GotoPreviousError<CR>
+
+# NB: requires that you close all tool windows
+# and save that view as your "Default Layout"
+# with Window -> Store Current Layout As Default
+nmap <C-W>o :action RestoreDefaultLayout<CR>
+
+nmap <Leader>n :action SelectIn<CR>
+
+set surround
+set multiple-cursors
+map <C-N>  <A-N>
+map <C-X>  <A-X>
+map g<C-N> g<A-N>
+
+nnoremap <Tab> :action NextTab<CR>
+nnoremap <S-Tab> :action PreviousTab<CR>

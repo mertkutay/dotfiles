@@ -1,0 +1,31 @@
+PATH="/usr/local/bin:$PATH"
+[ -d "/usr/local/sbin" ]              && PATH="/usr/local/sbin:$PATH"
+[ -d "$HOME/Library/Python/3.7/bin" ] && PATH="$PATH:$HOME/Library/Python/3.7/bin"
+if [ -d "$HOME/bin" ]; then
+  PATH="$HOME/bin:$PATH"
+fi
+
+if [ ! -d "${HOME}/.node_modules" ]; then
+  mkdir "${HOME}/.node_modules"
+fi
+NPM_PACKAGES="${HOME}/.node_modules"
+PATH="$NPM_PACKAGES/bin:$PATH"
+unset MANPATH
+export MANPATH="${NPM_PACKAGES}/share/man:$(manpath)"
+
+export LD_LIBRARY_PATH=/usr/local/lib
+export LDFLAGS="-L/usr/local/opt/openssl/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl/include"
+
+typeset -a paths result
+paths=($path)
+
+while [[ ${#paths} -gt 0 ]]; do
+  p="${paths[1]}"
+  shift paths
+  [[ -z ${paths[(r)$p]} ]] && result+="$p"
+done
+
+clean_path=${(j+:+)result}
+export PATH
+export PATH=$clean_path
