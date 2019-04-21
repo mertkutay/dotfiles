@@ -11,10 +11,10 @@ set nu rnu
 set splitbelow
 set splitright
 if !&scrolloff
-  set scrolloff=3
+    set scrolloff=3
 endif
 if !&sidescrolloff
-  set sidescrolloff=5
+    set sidescrolloff=5
 endif
 set display+=lastline
 set nostartofline
@@ -47,7 +47,7 @@ nmap <Leader>s :%s//g<Left><Left>
 
 " Use <C-L> to clear the highlighting of :set hlsearch.
 if maparg('<C-L>', 'n') ==# ''
-  nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
+    nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
 endif
 
 " set cursorcolumn
@@ -89,7 +89,12 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " YouCompleteMe
 let g:ycm_autoclose_preview_window_after_insertion=1
-let g:ycm_semantic_triggers = {'python': ['re!from\s+\S+\s+import\s']}
+let g:ycm_semantic_triggers = {
+\    'python': [
+\        're!from\s',
+\        're!import\s',
+\    ]
+\}
 let g:ycm_goto_buffer_command = 'split-or-existing-window'
 map <leader>d :rightbelow vertical YcmCompleter GoToDefinitionElseDeclaration<CR>
 
@@ -147,7 +152,7 @@ py3 << EOF
 import os
 import sys
 if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  exec(open(activate_this).read(), {'__file__':activate_this})
+    project_base_dir = os.environ['VIRTUAL_ENV']
+    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+    exec(open(activate_this).read(), {'__file__':activate_this})
 EOF
