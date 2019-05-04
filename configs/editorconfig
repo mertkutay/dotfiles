@@ -16,7 +16,7 @@ indent_size = 4
 line_length=120
 multi_line_output=3
 
-[*.{html,css,scss,json,yml}]
+[*.{js,html,css,scss,json,yml}]
 indent_style = space
 indent_size = 2
 
