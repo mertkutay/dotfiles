@@ -39,7 +39,8 @@ set magic
 set backupdir=~/.config/nvim/backup//
 set directory=~/.config/nvim/swap//
 set undodir=~/.config/nvim/undo//
-set list listchars=tab:>\ ,extends:>,precedes:<,nbsp:+,trail:-,eol:↵
+set list listchars=tab:>\ ,extends:>,precedes:<,nbsp:+,trail:-
+set signcolumn=yes
 set hidden
 set updatetime=200
 let mapleader=','
@@ -78,7 +79,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'ayu-theme/ayu-vim'
 Plug 'tmhedberg/SimpylFold'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
@@ -90,10 +91,26 @@ Plug 'airblade/vim-gitgutter'
 Plug 'machakann/vim-highlightedyank'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
+Plug 'jreybert/vimagit'
 call plug#end()
 
 filetype plugin on
+
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '>'
+let g:gitgutter_sign_removed = '-'
+let g:gitgutter_sign_removed_first_line = '^'
+let g:gitgutter_sign_modified_removed = '<'
+nmap <Leader>gn <Plug>GitGutterNextHunk
+nmap <Leader>gp <Plug>GitGutterPrevHunk
+nmap <Leader>ga <Plug>GitGutterStageHunk
+nmap <Leader>gu <Plug>GitGutterUndoHunk
+nnoremap <leader>gs :Magit<CR>
+nnoremap <Leader>gb :Gblame<CR>
+nnoremap <Leader>gb :.Gbrowse<CR>
+vnoremap <Leader>gb :Gbrowse<CR>
 
 " Multicursor
 let g:multi_cursor_use_default_mapping=0
@@ -104,14 +121,15 @@ let g:multi_cursor_quit_key='<Esc>'
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+    \ 'javascript.jsx': ['/usr/local/bin/javascript-typescript-stdio'],
     \ 'python': ['/usr/local/bin/pyls', '-v'],
     \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
     \ }
 let g:LanguageClient_settingsPath = '~/.config/nvim/settings.json'
+let g:LanguageClient_useVirtualText = 0
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition({'gotoCmd': 'vsp'})<CR>
 nnoremap <silent> <leader>r :call LanguageClient#textDocument_rename()<CR>
 nnoremap <silent> <leader>f :call LanguageClient#textDocument_formatting()<CR>
 nnoremap <silent> <C-k> :cprevious<CR>
@@ -152,14 +170,19 @@ let g:NERDDefaultAlign = 'left'
 
 " fzf
 nmap ; :Files<CR>
+nmap \ :Rg<CR>
+
+" ripgrep
+let g:rg_command = 'rg --vimgrep -S'
 
 " Theme
 set background=dark
 set termguicolors
-silent! colorscheme papercolor
+let ayucolor="dark"
+silent! colorscheme ayu
 
 " Airline
-let g:airline_theme='papercolor'
+let g:airline_theme='ayu'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_powerline_fonts=1

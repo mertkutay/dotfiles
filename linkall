@@ -57,8 +57,8 @@ echo ""
 for dotfile in `find $SCRIPTPATH -mindepth 1 -maxdepth 1`; do
   if [[ "${dotfile##*/}" == "nvim.vim" ]]; then
     linkfile=".config/nvim/init.vim"
-  elif [[ "${dotfile##*/}" == ".DS_Store" ]]; then
-    continue
+  elif [[ "${dotfile##*/}" == "kitty.conf" ]]; then
+    linkfile=".config/kitty/kitty.conf"
   else
     linkfile=".${dotfile##*/}"
   fi

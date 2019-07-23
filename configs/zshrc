@@ -84,9 +84,9 @@ source $ZSH/oh-my-zsh.sh
 
 bindkey '^R' history-incremental-search-backward
 
-function nicediff {
-  diff -W `tput cols` -y "$@" | colordiff | less
-}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd set-title-precmd
+add-zsh-hook preexec set-title-preexec
 
 alias pip='pip3'
 alias python='python3'
@@ -94,7 +94,7 @@ alias vim='nvim'
 alias ta='tmux attach'
 alias tl='tmux ls'
 alias urldecode='python3 -c "import sys, urllib.parse as ul; print(ul.unquote_plus(sys.argv[1]))"'
-alias ssh='ssh -A'
+alias ssh='TERM=xterm-256color ssh -A'
 alias plus='python3 manage.py shell_plus'
 
 alias l="ls -lhFG"
@@ -103,6 +103,9 @@ alias ltr="ls -lhFGtr"
 alias lsr="ls -lhFGSr"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND="rg --files"
 
+export LANG=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
 export PYTHONPATH="senpai:$PYTHONPATH"
 export COMPOSE_FILE=local.yml
