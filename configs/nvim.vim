@@ -1,60 +1,65 @@
-syntax on
-set ruler
-set formatoptions+=o
-set textwidth=0
-set modeline
-set cursorline
-set linespace=0
-set nojoinspaces
-set number relativenumber
-set nu rnu
+set number
+set relativenumber
 set splitbelow
 set splitright
-if !&scrolloff
-    set scrolloff=3
-endif
-if !&sidescrolloff
-    set sidescrolloff=5
-endif
-set display+=lastline
+set cursorline
+set nojoinspaces
 set nostartofline
-set noerrorbells
-set backspace=indent,eol,start
-set showcmd
-set showmode
-set encoding=utf-8
-set autowrite
-set autoread
-set undofile
-set laststatus=2
-set fileformats=unix,dos,mac
-set showmatch
-set incsearch
-set hlsearch
-set ignorecase
 set smartcase
-set autoindent
 set tabstop=4 shiftwidth=4 expandtab
-set magic
-set backupdir=~/.config/nvim/backup//
-set directory=~/.config/nvim/swap//
-set undodir=~/.config/nvim/undo//
-set list listchars=tab:>\ ,extends:>,precedes:<,nbsp:+,trail:-
-set signcolumn=yes
+set backupdir=~/.config/nvim/backup
+set directory=~/.config/nvim/swap
+set undodir=~/.config/nvim/undo
+set undofile
 set hidden
+set signcolumn=yes
 set updatetime=200
 let mapleader=','
 
-let g:python3_host_prog="/usr/local/bin/python3"
-let g:python_host_prog="/usr/local/bin/python"
+" Plugins here
+call plug#begin('~/.config/nvim/plugged')
+Plug 'tpope/vim-sensible'
+
+Plug 'ayu-theme/ayu-vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'jiangmiao/auto-pairs'
+Plug 'FooSoft/vim-argwrap'
+Plug 'scrooloose/nerdcommenter'
+Plug 'tmhedberg/SimpylFold'
+Plug 'Konfekt/FastFold'
+
+Plug 'scrooloose/nerdtree'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+Plug 'Yggdroot/indentLine'
+Plug 'machakann/vim-highlightedyank'
+Plug 'sheerun/vim-polyglot'
+
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'junegunn/gv.vim'
+
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'Shougo/echodoc.vim'
+
+Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'thomasfaingnaert/vim-lsp-snippets'
+Plug 'thomasfaingnaert/vim-lsp-ultisnips'
+call plug#end()
 
 " Search and Replace
 nmap <Leader>s :%s//g<Left><Left>
-
-" Use <C-L> to clear the highlighting of :set hlsearch.
-if maparg('<C-L>', 'n') ==# ''
-    nnoremap <silent> <C-L> :nohlsearch<CR><C-L>
-endif
 
 " set cursorcolumn
 nmap <Space> <PageDown>
@@ -64,86 +69,61 @@ nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 map <leader>q :bp<bar>sp<bar>bn<bar>bd<CR>
 
-" Plugins here
-call plug#begin('~/.config/nvim/plugged')
-Plug 'jiangmiao/auto-pairs'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Konfekt/FastFold'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'Yggdroot/indentLine'
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
-Plug 'ayu-theme/ayu-vim'
-Plug 'tmhedberg/SimpylFold'
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'FooSoft/vim-argwrap'
-Plug 'dominikduda/vim_current_word'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'machakann/vim-highlightedyank'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'sheerun/vim-polyglot'
-Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-surround'
-Plug 'jreybert/vimagit'
-call plug#end()
+" Theme
+set background=dark
+set termguicolors
+let ayucolor="dark"
+silent! colorscheme ayu
 
-filetype plugin on
+" Airline
+let g:airline_theme='ayu'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline_powerline_fonts=1
 
+" Gitgutter
 let g:gitgutter_sign_added = '+'
 let g:gitgutter_sign_modified = '>'
 let g:gitgutter_sign_removed = '-'
 let g:gitgutter_sign_removed_first_line = '^'
 let g:gitgutter_sign_modified_removed = '<'
-nmap <Leader>gn <Plug>GitGutterNextHunk
-nmap <Leader>gp <Plug>GitGutterPrevHunk
-nmap <Leader>ga <Plug>GitGutterStageHunk
-nmap <Leader>gu <Plug>GitGutterUndoHunk
-nnoremap <leader>gs :Magit<CR>
-nnoremap <Leader>gb :Gblame<CR>
-nnoremap <Leader>gb :.Gbrowse<CR>
-vnoremap <Leader>gb :Gbrowse<CR>
+nnoremap <leader>gb :Gblame<CR>
+nnoremap <leader>gb :Gbrowse<CR>
+vnoremap <leader>gb :Gbrowse<CR>
 
-" Multicursor
-let g:multi_cursor_use_default_mapping=0
-let g:multi_cursor_next_key='<C-n>'
-let g:multi_cursor_quit_key='<Esc>'
+" LSP
+nnoremap gd :LspDefinition<CR>
+nnoremap gr :LspReferences<CR>
+nnoremap K :LspPeekDefinition<CR>
+nnoremap <leader>r :LspRename<CR>
+nnoremap <leader>f :LspDocumentFormat<CR>
+nnoremap <C-j> :LspNextError<CR>
+nnoremap <C-k> :LspPreviousError<CR>
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
+autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 
-" Language Client
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['/usr/local/bin/javascript-typescript-stdio'],
-    \ 'python': ['/usr/local/bin/pyls', '-v'],
-    \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
-    \ }
-let g:LanguageClient_settingsPath = '~/.config/nvim/settings.json'
-let g:LanguageClient_useVirtualText = 0
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition({'gotoCmd': 'vsp'})<CR>
-nnoremap <silent> <leader>r :call LanguageClient#textDocument_rename()<CR>
-nnoremap <silent> <leader>f :call LanguageClient#textDocument_formatting()<CR>
-nnoremap <silent> <C-k> :cprevious<CR>
-nnoremap <silent> <C-j> :cnext<CR>
+if executable('pyls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'whitelist': ['python'],
+        \ })
+endif
 
-" deoplete
-let g:deoplete#enable_at_startup = 1
+let g:lsp_signs_enabled = 1
+let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_virtual_text_enabled = 0
+highlight lspReference gui=underline
+let g:lsp_highlights_enabled = 0
 
-" auto completion
-autocmd InsertLeave * if pumvisible() == 0 | silent! pclose | endif
-inoremap <silent><expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+" echodoc
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#type = 'floating'
+highlight link EchoDocFloat Pmenu
 
 " highlighted yank
-hi HighlightedyankRegion cterm=reverse gui=reverse
 let g:highlightedyank_highlight_duration = 1000
 
 " Ulti Snips
@@ -161,31 +141,23 @@ let g:argwrap_tail_comma = 1
 
 " Nerdtree
 map <C-o> :NERDTreeToggle<CR>
-let NERDTreeIgnore = ['_site', '\.pyc$', '\~$']
+let NERDTreeIgnore = ['_site', '__pycache__', '\.pyc$', '\~$']
 set mouse=a
 let g:NERDTreeMouseMode=3
 
 " Nerdcommenter
 let g:NERDDefaultAlign = 'left'
+let g:NERDSpaceDelims = 1
 
 " fzf
 nmap ; :Files<CR>
 nmap \ :Rg<CR>
 
-" ripgrep
-let g:rg_command = 'rg --vimgrep -S'
-
-" Theme
-set background=dark
-set termguicolors
-let ayucolor="dark"
-silent! colorscheme ayu
-
-" Airline
-let g:airline_theme='ayu'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline_powerline_fonts=1
+" JSON
+autocmd FileType json setlocal foldmethod=syntax
+command FormatJson execute "%!python -m json.tool"
+command Pyrun execute "!python %"
+command Intpyrun execute "!python -i %"
 
 "python with virtualenv support
 py3 << EOF
