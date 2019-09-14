@@ -5,6 +5,7 @@ set splitright
 set cursorline
 set nojoinspaces
 set nostartofline
+set ignorecase
 set smartcase
 set tabstop=4 shiftwidth=4 expandtab
 set backupdir=~/.config/nvim/backup
@@ -58,6 +59,9 @@ Plug 'thomasfaingnaert/vim-lsp-snippets'
 Plug 'thomasfaingnaert/vim-lsp-ultisnips'
 call plug#end()
 
+let g:python_host_prog='/usr/local/bin/python'
+let g:python3_host_prog='/usr/local/bin/python3'
+
 " Search and Replace
 nmap <Leader>s :%s//g<Left><Left>
 
@@ -75,6 +79,11 @@ set termguicolors
 let ayucolor="dark"
 silent! colorscheme ayu
 
+" IndentLine
+let g:indentLine_char = ''
+let g:indentLine_first_char = ''
+let g:indentLine_setColors = 0
+
 " Airline
 let g:airline_theme='ayu'
 let g:airline#extensions#tabline#enabled = 1
@@ -87,9 +96,8 @@ let g:gitgutter_sign_modified = '>'
 let g:gitgutter_sign_removed = '-'
 let g:gitgutter_sign_removed_first_line = '^'
 let g:gitgutter_sign_modified_removed = '<'
+nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gb :Gblame<CR>
-nnoremap <leader>gb :Gbrowse<CR>
-vnoremap <leader>gb :Gbrowse<CR>
 
 " LSP
 nnoremap gd :LspDefinition<CR>
@@ -109,6 +117,31 @@ if executable('pyls')
         \ 'name': 'pyls',
         \ 'cmd': {server_info->['pyls']},
         \ 'whitelist': ['python'],
+        \ })
+endif
+
+if executable('vls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'vue-language-server',
+        \ 'cmd': {server_info->['vls']},
+        \ 'whitelist': ['vue'],
+        \ 'initialization_options': {
+        \         'config': {
+        \             'html': {},
+        \              'vetur': {
+        \                  'validation': {}
+        \              }
+        \         }
+        \     }
+        \ })
+endif
+
+if executable('typescript-language-server')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'javascript support using typescript-language-server',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'package.json'))},
+        \ 'whitelist': ['javascript', 'javascript.jsx'],
         \ })
 endif
 
@@ -158,6 +191,9 @@ autocmd FileType json setlocal foldmethod=syntax
 command FormatJson execute "%!python -m json.tool"
 command Pyrun execute "!python %"
 command Intpyrun execute "!python -i %"
+
+" Vue
+autocmd FileType vue setlocal tabstop=2 shiftwidth=2
 
 "python with virtualenv support
 py3 << EOF
