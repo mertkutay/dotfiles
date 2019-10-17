@@ -13,7 +13,7 @@ set directory=~/.config/nvim/swap
 set undodir=~/.config/nvim/undo
 set undofile
 set hidden
-set signcolumn=yes
+set signcolumn=yes:2
 set updatetime=200
 let mapleader=','
 
@@ -22,6 +22,7 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'tpope/vim-sensible'
 
 Plug 'ayu-theme/ayu-vim'
+Plug 'srcery-colors/srcery-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -77,18 +78,22 @@ map <leader>q :bp<bar>sp<bar>bn<bar>bd<CR>
 set background=dark
 set termguicolors
 let ayucolor="dark"
-silent! colorscheme ayu
+
+" Pick a random theme from my favorites
+let microseconds = split(reltimestr(reltime()), '\.')[-1] + 0
+let theme = ["ayu", "srcery"][microseconds % 2]
+silent! execute "colorscheme" fnameescape(theme)
+
+" Airline
+let g:airline_theme = theme
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline_powerline_fonts = 1
 
 " IndentLine
 let g:indentLine_char = ''
 let g:indentLine_first_char = ''
 let g:indentLine_setColors = 0
-
-" Airline
-let g:airline_theme='ayu'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline_powerline_fonts=1
 
 " Gitgutter
 let g:gitgutter_sign_added = '+'
