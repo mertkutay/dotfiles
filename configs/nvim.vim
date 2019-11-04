@@ -23,6 +23,9 @@ Plug 'tpope/vim-sensible'
 
 Plug 'ayu-theme/ayu-vim'
 Plug 'srcery-colors/srcery-vim'
+Plug 'joshdick/onedark.vim'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -80,8 +83,8 @@ set termguicolors
 let ayucolor="dark"
 
 " Pick a random theme from my favorites
-let microseconds = split(reltimestr(reltime()), '\.')[-1] + 0
-let theme = ["ayu", "srcery"][microseconds % 2]
+let today = strftime("%j") + 0
+let theme = ["ayu", "srcery", "onedark", "papercolor", "gruvbox"][today % 5]
 silent! execute "colorscheme" fnameescape(theme)
 
 " Airline
@@ -93,7 +96,7 @@ let g:airline_powerline_fonts = 1
 " IndentLine
 let g:indentLine_char = ''
 let g:indentLine_first_char = ''
-let g:indentLine_setColors = 0
+" let g:indentLine_setColors = 0
 
 " Gitgutter
 let g:gitgutter_sign_added = '+'
