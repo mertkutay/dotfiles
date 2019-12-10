@@ -1,15 +1,15 @@
 PATH="/usr/local/bin:$PATH"
-[ -d "/usr/local/sbin" ]              && PATH="/usr/local/sbin:$PATH"
+[ -d "/usr/local/sbin" ] && PATH="/usr/local/sbin:$PATH"
+[ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
 [ -d "$HOME/Library/Python/3.7/bin" ] && PATH="$PATH:$HOME/Library/Python/3.7/bin"
-if [ -d "$HOME/bin" ]; then
-  PATH="$HOME/bin:$PATH"
-fi
+[ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
 
-if [ ! -d "${HOME}/.node_modules" ]; then
-  mkdir "${HOME}/.node_modules"
-fi
+[ ! -d "${HOME}/.node_modules" ] && mkdir "${HOME}/.node_modules"
 NPM_PACKAGES="${HOME}/.node_modules"
 PATH="$NPM_PACKAGES/bin:$PATH"
+
+[ -x "$(command -v yarn)" ] && PATH="$(yarn global bin):$PATH"
+
 unset MANPATH
 export MANPATH="${NPM_PACKAGES}/share/man:$(manpath)"
 

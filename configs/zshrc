@@ -58,18 +58,14 @@ else
   export EDITOR='nvim'
 fi
 
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-vnw_script="/usr/local/bin/virtualenvwrapper.sh"
-if [[ -e "$vnw_script" ]]; then
-    source "$vnw_script"
-fi
-
 vew_on_path=$(type virtualenvwrapper >/dev/null; echo $?)
-if [[ "$vew_on_path" -eq 0 || -e "$vnw_script" ]]; then
-  if [[ ! -d "$HOME/.virtualenvs" ]]; then
-    mkdir "$HOME/.virtualenvs"
-  fi
+if [[ "$vew_on_path" -eq 0 || -x "$(command -v virtualenvwrapper.sh)" ]]; then
+  export VIRTUALENVWRAPPER_PYTHON=$(which python3)
+  source virtualenvwrapper.sh
   export WORKON_HOME="$HOME/.virtualenvs"
+  if [[ ! -d $WORKON_HOME ]]; then
+    mkdir $WORKON_HOME
+  fi
   plugins=($plugins virtualenvwrapper)
 fi
 
@@ -107,5 +103,5 @@ export FZF_DEFAULT_COMMAND="rg --files"
 
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
-export PYTHONPATH="senpai:fashioni:$PYTHONPATH"
+export PYTHONPATH="senpai:$PYTHONPATH"
 export COMPOSE_FILE=local.yml

@@ -1,6 +1,10 @@
 zsh_internet_signal(){
-  local output=$(airport -I)
-  local signal=$(echo $output | grep agrCtlRSSI | awk '{print $2}' | sed "s/-//g")
+  if [ -x "$(command -v airport)" ]; then
+      local output=$(airport -I)
+      local signal=$(echo $output | grep agrCtlRSSI | awk '{print $2}' | sed "s/-//g")
+  else
+      local signal=0
+  fi
 
   local color="%F{yellow}"
   local symbol="\uf197"
@@ -27,7 +31,7 @@ zsh_internet_signal(){
 
     # Ethernet Connection
     if [[ "$net" -eq 200 ]]; then
-      color="%F{blue}"; symbol="\uf197"
+      color="%F{blue}"; symbol="\uf0e8"
     # No Internet
     else
       color="%F{red}"; symbol="\uf011"
