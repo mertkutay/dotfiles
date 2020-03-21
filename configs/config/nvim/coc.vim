@@ -66,7 +66,7 @@ nmap <leader>a <Plug>(coc-codeaction-selected)
 " Remap for do codeAction of current line
 nmap <leader>ac <Plug>(coc-codeaction)
 " Fix autofix problem of current line
-nmap <leader>qf <Plug>(coc-fix-current)
+" nmap <leader>qf <Plug>(coc-fix-current)
 
 " Create mappings for function text object, requires document symbols feature of languageserver.
 xmap if <Plug>(coc-funcobj-i)
@@ -90,22 +90,22 @@ command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 " set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-" Using CocList
-" Show all diagnostics
-nnoremap <silent> <space>a :<C-u>CocList diagnostics<CR>
-" Manage extensions
-nnoremap <silent> <space>e :<C-u>CocList extensions<CR>
-" Show commands
-nnoremap <silent> <space>c :<C-u>CocList commands<CR>
-" Find symbol of current document
-nnoremap <silent> <space>o :<C-u>CocList outline<CR>
-" Search workspace symbols
-nnoremap <silent> <space>s :<C-u>CocList -I symbols<CR>
-" Do default action for next item.
-nnoremap <silent> <space>j :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>k :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <space>p :<C-u>CocListResume<CR>
+" " Using CocList
+" " Show all diagnostics
+" nnoremap <silent> <space>a :<C-u>CocList diagnostics<CR>
+" " Manage extensions
+" nnoremap <silent> <space>e :<C-u>CocList extensions<CR>
+" " Show commands
+" nnoremap <silent> <space>c :<C-u>CocList commands<CR>
+" " Find symbol of current document
+" nnoremap <silent> <space>o :<C-u>CocList outline<CR>
+" " Search workspace symbols
+" nnoremap <silent> <space>s :<C-u>CocList -I symbols<CR>
+" " Do default action for next item.
+" nnoremap <silent> <space>j :<C-u>CocNext<CR>
+" " Do default action for previous item.
+" nnoremap <silent> <space>k :<C-u>CocPrev<CR>
+" " Resume latest coc list
+" nnoremap <silent> <space>p :<C-u>CocListResume<CR>
 
-nnoremap <silent> <space>y :<C-u>CocList -A --normal yank<cr>
+" nnoremap <silent> <space>y :<C-u>CocList -A --normal yank<cr>

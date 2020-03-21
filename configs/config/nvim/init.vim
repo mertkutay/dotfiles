@@ -18,39 +18,10 @@ set cmdheight=1
 set updatetime=200
 set shortmess+=c
 set signcolumn=yes:2
-set clipboard+=unnamedplus
 let mapleader=','
 
-" Plugins here
-call plug#begin('~/.config/nvim/plugged')
-Plug 'tpope/vim-sensible'
-
-Plug 'joshdick/onedark.vim'
-Plug 'vim-airline/vim-airline'
-
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'jiangmiao/auto-pairs'
-Plug 'FooSoft/vim-argwrap'
-Plug 'scrooloose/nerdcommenter'
-Plug 'tmhedberg/SimpylFold'
-Plug 'Konfekt/FastFold'
-
-Plug 'scrooloose/nerdtree'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-
-Plug 'Yggdroot/indentLine'
-Plug 'sheerun/vim-polyglot'
-
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
-Plug 'junegunn/gv.vim'
-
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-call plug#end()
+" Plugins
+source $HOME/.config/nvim/plugins.vim
 
 " Search and Replace
 nmap <Leader>s :%s//g<Left><Left>
@@ -70,10 +41,11 @@ source $HOME/.config/nvim/coc.vim
 set background=dark
 set termguicolors
 let ayucolor="dark"
-colorscheme onedark
+let g:sonokai_style = 'atlantis'
+colorscheme sonokai
 
 " Airline
-let g:airline_theme = 'onedark'
+let g:airline_theme = 'sonokai'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_powerline_fonts = 1

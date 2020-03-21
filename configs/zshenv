@@ -28,4 +28,5 @@ done
 
 clean_path=${(j+:+)result}
 export PATH
+export PATH=$(brew --prefix openssl)/bin:$PATH
 export PATH=$clean_path
