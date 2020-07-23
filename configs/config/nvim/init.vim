@@ -40,8 +40,8 @@ source $HOME/.config/nvim/coc.vim
 " Theme
 set background=dark
 set termguicolors
-let ayucolor="dark"
-let g:sonokai_style = 'atlantis'
+let g:sonokai_enable_italic = 1
+let g:sonokai_current_word = 'underline'
 colorscheme sonokai
 
 " Airline
@@ -84,6 +84,12 @@ let g:NERDSpaceDelims = 1
 " fzf
 nmap ; :Files<CR>
 nmap \ :Rg<CR>
+
+" Remember cursor position between vim sessions
+autocmd BufReadPost *
+      \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+      \   exe "normal! g'\"" |
+      \ endif
 
 "python with virtualenv support
 py3 << EOF

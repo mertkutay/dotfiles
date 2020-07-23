@@ -99,7 +99,6 @@ alias ltr="ls -lhFGtr"
 alias lsr="ls -lhFGSr"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND="rg --files"
 
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
