@@ -4,6 +4,8 @@ source "$HOME/.zsh_functions"
 
 t
 
+[[ "$TMUX" == "" ]] && TERM=xterm-256color
+
 ZSH_THEME="powerlevel9k/powerlevel9k"
 DEFAULT_USER=`whoami`
 POWERLEVEL9K_MODE="nerdfont-complete"
@@ -80,6 +82,7 @@ setopt nolistbeep
 
 source $ZSH/oh-my-zsh.sh
 
+bindkey -v
 bindkey '^R' history-incremental-search-backward
 
 autoload -Uz add-zsh-hook
