@@ -8,6 +8,8 @@ function! BuildComposer(info)
   endif
 endfunction
 
+let g:polyglot_disabled = ['markdown']
+
 " Plugins here
 call plug#begin('~/.config/nvim/plugged')
 Plug 'tpope/vim-sensible'
@@ -40,5 +42,3 @@ Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
-
-let g:polyglot_disabled = ['markdown']

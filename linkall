@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 # Credit for this file: https://github.com/aaronbieber/dotfiles
 
@@ -28,6 +28,9 @@ EOF
     exit 1
   fi
 fi
+
+# install zsh here
+
 
 # Install and configure zsh, oh my zsh and vim plugins
 if [ ! -d "$ZSH" ]; then
@@ -62,8 +65,6 @@ for dotfile in `find $SCRIPTPATH -mindepth 1 -maxdepth 1`; do
   else
     linkfile=".${dotfile##*/}"
   fi
-
-  if [ -d "./$linkfile" ]
 
   if [ -e "$linkfile" ]; then
     echo -n "${yellow}Exists${reset}"

@@ -1,3 +1,17 @@
+t(){
+  if hash tmux 2>/dev/null; then
+    if [[ -z "$TMUX" ]] && [[ -z "$SSH_CLIENT" ]] && [[ -z "$SSH_TTY" ]]; then
+
+      tmux ls | grep "^default:" >/dev/null 2>&1
+      if [[ "$?" == 1 ]]; then
+        tmux new-session -s default
+      else
+        tmux attach-session -t default
+      fi
+    fi
+  fi
+}
+
 zsh_internet_signal(){
   if [ -x "$(command -v airport)" ]; then
       local output=$(airport -I)
@@ -41,13 +55,15 @@ zsh_internet_signal(){
   echo -n "%{$color%}$symbol "
 }
 
-function top() {
-  if [ $# -eq 0 ]; then
-    /usr/bin/top -o cpu
-  else
-    /usr/bin/top "$@"
-  fi
-}
+if [[ `uname` == "Darwin" ]]; then
+  function top() {
+    if [ $# -eq 0 ]; then
+      /usr/bin/top -o cpu
+    else
+      /usr/bin/top "$@"
+    fi
+  }
+fi
 
 function nicediff {
   diff -W `tput cols` -y "$@" | colordiff | less
