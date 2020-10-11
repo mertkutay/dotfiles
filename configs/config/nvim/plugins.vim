@@ -14,7 +14,7 @@ let g:polyglot_disabled = ['markdown']
 call plug#begin('~/.config/nvim/plugged')
 Plug 'tpope/vim-sensible'
 
-Plug 'sainnhe/sonokai'
+Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 
 Plug 'tpope/vim-surround'

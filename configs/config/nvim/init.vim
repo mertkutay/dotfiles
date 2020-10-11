@@ -40,12 +40,10 @@ source $HOME/.config/nvim/coc.vim
 " Theme
 set background=dark
 set termguicolors
-let g:sonokai_enable_italic = 1
-let g:sonokai_current_word = 'underline'
-colorscheme sonokai
+colorscheme gruvbox
 
 " Airline
-let g:airline_theme = 'sonokai'
+let g:airline_theme = 'gruvbox'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_powerline_fonts = 1

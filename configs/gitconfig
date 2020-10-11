@@ -3,3 +3,5 @@
 # Please adapt and uncomment the following lines:
 	name = Mert Kutay
 	email = mertckutay@gmail.com
+[pull]
+	rebase = false

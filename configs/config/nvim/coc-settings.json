@@ -83,6 +83,9 @@
             "pyflakes": {
               "enabled": true
             },
+            "pylint": {
+              "enabled": true
+            },
             "rope_completion": {
               "enabled": true
             },
