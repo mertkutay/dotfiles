@@ -26,9 +26,6 @@ source $HOME/.config/nvim/plugins.vim
 " Search and Replace
 nmap <Leader>s :%s//g<Left><Left>
 
-" set cursorcolumn
-nmap <Space> <PageDown>
-
 " Buffer handling
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
@@ -88,6 +85,13 @@ autocmd BufReadPost *
       \ if line("'\"") > 0 && line ("'\"") <= line("$") |
       \   exe "normal! g'\"" |
       \ endif
+
+" EasyMotion
+let g:EasyMotion_do_mapping = 0
+nmap s <Plug>(easymotion-overwin-f2)
+let g:EasyMotion_smartcase = 1
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
 
 "python with virtualenv support
 py3 << EOF

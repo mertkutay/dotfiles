@@ -26,6 +26,8 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tmhedberg/SimpylFold'
 Plug 'Konfekt/FastFold'
 
+Plug 'easymotion/vim-easymotion'
+
 Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
