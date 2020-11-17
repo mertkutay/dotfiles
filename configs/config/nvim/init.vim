@@ -37,10 +37,10 @@ source $HOME/.config/nvim/coc.vim
 " Theme
 set background=dark
 set termguicolors
-colorscheme gruvbox
+colorscheme srcery
 
 " Airline
-let g:airline_theme = 'gruvbox'
+let g:airline_theme = 'srcery'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_powerline_fonts = 1
@@ -92,6 +92,14 @@ nmap s <Plug>(easymotion-overwin-f2)
 let g:EasyMotion_smartcase = 1
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
+
+" Anzu
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-sharp-with-echo)
+nmap <Esc><Esc> <Plug>(anzu-clear-search-status)
+set statusline=%{anzu#search_status()}
 
 "python with virtualenv support
 py3 << EOF

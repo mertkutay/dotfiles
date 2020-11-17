@@ -15,6 +15,7 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'tpope/vim-sensible'
 
 Plug 'morhetz/gruvbox'
+Plug 'srcery-colors/srcery-vim'
 Plug 'vim-airline/vim-airline'
 
 Plug 'tpope/vim-surround'
@@ -27,6 +28,7 @@ Plug 'tmhedberg/SimpylFold'
 Plug 'Konfekt/FastFold'
 
 Plug 'easymotion/vim-easymotion'
+Plug 'osyo-manga/vim-anzu'
 
 Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
