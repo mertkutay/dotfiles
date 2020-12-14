@@ -6,7 +6,7 @@ t
 
 [[ "$TMUX" == "" ]] && TERM=xterm-256color
 
-ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 DEFAULT_USER=`whoami`
 POWERLEVEL9K_MODE="nerdfont-complete"
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
@@ -111,3 +111,5 @@ fi
 
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
+
+eval `keychain --eval`
