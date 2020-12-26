@@ -9,7 +9,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion"  ] && \. "$NVM_DIR/bash_completion"
 
 [ ! -d "${HOME}/.node_modules" ] && mkdir "${HOME}/.node_modules" && npm config set prefix "${HOME}/.node_modules"
-NPM_PACKAGES="${HOME}/.node_modules"
+export NPM_PACKAGES="${HOME}/.node_modules"
 PATH="$NPM_PACKAGES/bin:$PATH"
 
 [ -x "$(command -v yarn)" ] && PATH="$(yarn global bin):$PATH"
@@ -17,9 +17,7 @@ PATH="$NPM_PACKAGES/bin:$PATH"
 unset MANPATH
 export MANPATH="${NPM_PACKAGES}/share/man:$(manpath)"
 
-export LD_LIBRARY_PATH=/usr/local/lib
-export LDFLAGS="-L/usr/local/opt/openssl/lib"
-export CPPFLAGS="-I/usr/local/opt/openssl/include"
+PATH="$PATH:$HOME/.local/bin"
 
 typeset -a paths result
 paths=($path)
@@ -30,8 +28,6 @@ while [[ ${#paths} -gt 0 ]]; do
   [[ -z ${paths[(r)$p]} ]] && result+="$p"
 done
 
-export PATH="$PATH:$HOME/.local/bin"
 clean_path=${(j+:+)result}
 export PATH
-# export PATH=$(brew --prefix openssl)/bin:$PATH
 export PATH=$clean_path
