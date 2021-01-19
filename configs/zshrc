@@ -6,45 +6,14 @@ t
 
 [[ "$TMUX" == "" ]] && TERM=xterm-256color
 
-ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME=""
 DEFAULT_USER=`whoami`
-POWERLEVEL9K_MODE="nerdfont-complete"
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
-POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=4
-POWERLEVEL9K_SHORTEN_STRATEGY="truncate_beginning"
-POWERLEVEL9K_PYTHON_ICON='\uf81f'
-POWERLEVEL9K_VIRTUALENV_FOREGROUND='black'
-POWERLEVEL9K_VIRTUALENV_BACKGROUND='green'
-POWERLEVEL9K_TIME_ICON='\uf017'
-POWERLEVEL9K_TIME_FORMAT="%D{%H:%M}"
-POWERLEVEL9K_STATUS_VERBOSE=false
-POWERLEVEL9K_VCS_CLEAN_FOREGROUND='black'
-POWERLEVEL9K_VCS_CLEAN_BACKGROUND='green'
-POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='black'
-POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='yellow'
-POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='black'
-POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='yellow'
-POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND='black'
-POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND='blue'
-POWERLEVEL9K_STATUS_OK_IN_NON_VERBOSE=true
-POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=0
-POWERLEVEL9K_CUSTOM_INTERNET_SIGNAL="zsh_internet_signal"
-POWERLEVEL9K_CUSTOM_INTERNET_SIGNAL_BACKGROUND="black"
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{blue}\u256D\u2500%f"
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{blue}\u2570\uf460%f "
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context os_icon virtualenv ssh root_indicator dir dir_writable vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time status background_jobs time disk_usage ram battery)
+
 HIST_STAMPS="mm/dd/yyyy"
 DISABLE_UPDATE_PROMPT=true
-
 DISABLE_AUTO_TITLE="true"
-
 DISABLE_CORRECTION="true"
-
 COMPLETION_WAITING_DOTS="true"
-
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 plugins=(
@@ -53,7 +22,6 @@ plugins=(
     themes
     zsh-autosuggestions
     zsh-syntax-highlighting
-    virtualenv
 )
 
 if [[ -n $SSH_CONNECTION ]]; then
@@ -82,6 +50,11 @@ setopt nolistbeep
 
 source $ZSH/oh-my-zsh.sh
 
+fpath+=$ZSH_CUSTOM/themes/pure
+
+autoload -U promptinit; promptinit
+prompt pure
+
 bindkey -v
 bindkey '^R' history-incremental-search-backward
 
@@ -108,8 +81,3 @@ else
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-export LANG=en_US.UTF-8
-export LC_CTYPE=en_US.UTF-8
-
-eval `keychain --eval`

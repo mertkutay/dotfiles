@@ -37,13 +37,27 @@ source $HOME/.config/nvim/coc.vim
 " Theme
 set background=dark
 set termguicolors
-colorscheme srcery
+let g:SnazzyTransparent = 1
+colorscheme snazzy
 
-" Airline
-let g:airline_theme = 'srcery'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline_powerline_fonts = 1
+" Lightline
+let g:lightline = {
+\ 'colorscheme': 'snazzy',
+\ 'active': {
+\   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'filename', 'modified' ] ]
+\ },
+\ 'tabline': {
+\   'left': [ ['buffers'] ],
+\   'right': [ ['close'] ]
+\ },
+\ 'component_expand': {
+\   'buffers': 'lightline#bufferline#buffers'
+\ },
+\ 'component_type': {
+\   'buffers': 'tabsel'
+\ }
+\ }
+set showtabline=2
 
 " IndentLine
 let g:indentLine_char = ''
