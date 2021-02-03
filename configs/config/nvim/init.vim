@@ -35,28 +35,48 @@ map <leader>q :bp<bar>sp<bar>bn<bar>bd<CR>
 source $HOME/.config/nvim/coc.vim
 
 " Theme
-set background=dark
+syntax on
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
-let g:SnazzyTransparent = 1
-colorscheme snazzy
+set background=dark
+let g:one_allow_italics=1
+colorscheme one
+function! AdaptColorscheme()
+   highlight clear CursorLine
+   highlight Normal ctermbg=none
+   highlight LineNr ctermbg=none
+   highlight Folded ctermbg=none
+   highlight NonText ctermbg=none
+   highlight SpecialKey ctermbg=none
+   highlight VertSplit ctermbg=none
+   highlight SignColumn ctermbg=none
+endfunction
+autocmd ColorScheme * call AdaptColorscheme()
+
+highlight Normal guibg=NONE ctermbg=NONE
+highlight CursorColumn cterm=NONE ctermbg=NONE ctermfg=NONE
+highlight CursorLine cterm=NONE ctermbg=NONE ctermfg=NONE
+highlight CursorLineNr cterm=NONE ctermbg=NONE ctermfg=NONE
+highlight clear LineNr
+highlight clear SignColumn
+
+set t_8b=^[[48;2;%lu;%lu;%lum
+set t_8f=^[[38;2;%lu;%lu;%lum
 
 " Lightline
 let g:lightline = {
-\ 'colorscheme': 'snazzy',
-\ 'active': {
-\   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'filename', 'modified' ] ]
-\ },
-\ 'tabline': {
-\   'left': [ ['buffers'] ],
-\   'right': [ ['close'] ]
-\ },
-\ 'component_expand': {
-\   'buffers': 'lightline#bufferline#buffers'
-\ },
-\ 'component_type': {
-\   'buffers': 'tabsel'
-\ }
-\ }
+      \ 'colorscheme': 'one',
+      \ 'tabline': {
+      \   'left': [ ['buffers'] ],
+      \   'right': [ ['close'] ]
+      \ },
+      \ 'component_expand': {
+      \   'buffers': 'lightline#bufferline#buffers'
+      \ },
+      \ 'component_type': {
+      \   'buffers': 'tabsel'
+      \ }
+      \ }
 set showtabline=2
 
 " IndentLine
@@ -106,14 +126,6 @@ nmap s <Plug>(easymotion-overwin-f2)
 let g:EasyMotion_smartcase = 1
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
-
-" Anzu
-nmap n <Plug>(anzu-n-with-echo)
-nmap N <Plug>(anzu-N-with-echo)
-nmap * <Plug>(anzu-star-with-echo)
-nmap # <Plug>(anzu-sharp-with-echo)
-nmap <Esc><Esc> <Plug>(anzu-clear-search-status)
-set statusline=%{anzu#search_status()}
 
 "python with virtualenv support
 py3 << EOF

@@ -14,7 +14,9 @@ let g:polyglot_disabled = ['markdown']
 call plug#begin('~/.config/nvim/plugged')
 Plug 'tpope/vim-sensible'
 
+Plug 'rakr/vim-one'
 Plug 'connorholyday/vim-snazzy'
+
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 
@@ -28,7 +30,6 @@ Plug 'tmhedberg/SimpylFold'
 Plug 'Konfekt/FastFold'
 
 Plug 'easymotion/vim-easymotion'
-Plug 'osyo-manga/vim-anzu'
 
 Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
