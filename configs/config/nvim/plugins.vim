@@ -1,3 +1,5 @@
+let $VIMHOME=expand('<sfile>:p:h')
+
 function! BuildComposer(info)
   if a:info.status != 'unchanged' || a:info.force
     if has('nvim')
@@ -11,7 +13,7 @@ endfunction
 let g:polyglot_disabled = ['markdown']
 
 " Plugins here
-call plug#begin('~/.config/nvim/plugged')
+call plug#begin('$VIMHOME/plugged')
 Plug 'tpope/vim-sensible'
 
 Plug 'morhetz/gruvbox'

@@ -42,16 +42,12 @@
       "args": ["--stdio"]
     },
     "python": {
-      "command": "python3",
-      "args": ["-mpyls", "-vv", "--log-file", "/tmp/lsp_python.log"],
-      "trace.server": "verbose",
+      "command": "pyls",
+      "args": [],
       "filetypes": ["python"],
       "settings": {
         "pyls": {
           "enable": true,
-          "trace": {
-            "server": "verbose"
-          },
           "commandPath": "",
           "configurationSources": ["pycodestyle"],
           "plugins": {

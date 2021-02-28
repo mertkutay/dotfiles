@@ -1,3 +1,5 @@
+let $VIMHOME=expand('<sfile>:p:h')
+
 set number
 set relativenumber
 set splitbelow
@@ -8,8 +10,8 @@ set nostartofline
 set ignorecase
 set smartcase
 set tabstop=4 shiftwidth=4 expandtab
-set directory=~/.config/nvim/swap
-set undodir=~/.config/nvim/undo
+set directory=$VIMHOME/swap
+set undodir=$VIMHOME/undo
 set undofile
 set hidden
 set nobackup
@@ -21,7 +23,7 @@ set signcolumn=yes:2
 let mapleader=','
 
 " Plugins
-source $HOME/.config/nvim/plugins.vim
+source $VIMHOME/plugins.vim
 
 " Search and Replace
 nmap <Leader>s :%s//g<Left><Left>
@@ -32,7 +34,7 @@ nnoremap <S-Tab> :bprevious<CR>
 map <leader>q :bp<bar>sp<bar>bn<bar>bd<CR>
 
 " LSP
-source $HOME/.config/nvim/coc.vim
+source $VIMHOME/coc.vim
 
 " Theme
 set termguicolors
