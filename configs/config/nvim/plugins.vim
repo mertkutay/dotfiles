@@ -14,11 +14,9 @@ let g:polyglot_disabled = ['markdown']
 call plug#begin('~/.config/nvim/plugged')
 Plug 'tpope/vim-sensible'
 
-Plug 'rakr/vim-one'
-Plug 'connorholyday/vim-snazzy'
+Plug 'morhetz/gruvbox'
 
-Plug 'itchyny/lightline.vim'
-Plug 'mengelbrecht/lightline-bufferline'
+Plug 'vim-airline/vim-airline'
 
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'

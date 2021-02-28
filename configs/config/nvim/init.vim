@@ -35,53 +35,20 @@ map <leader>q :bp<bar>sp<bar>bn<bar>bd<CR>
 source $HOME/.config/nvim/coc.vim
 
 " Theme
-syntax on
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
 set background=dark
-let g:one_allow_italics=1
-colorscheme one
-function! AdaptColorscheme()
-   highlight clear CursorLine
-   highlight Normal ctermbg=none
-   highlight LineNr ctermbg=none
-   highlight Folded ctermbg=none
-   highlight NonText ctermbg=none
-   highlight SpecialKey ctermbg=none
-   highlight VertSplit ctermbg=none
-   highlight SignColumn ctermbg=none
-endfunction
-autocmd ColorScheme * call AdaptColorscheme()
-
-highlight Normal guibg=NONE ctermbg=NONE
-highlight CursorColumn cterm=NONE ctermbg=NONE ctermfg=NONE
-highlight CursorLine cterm=NONE ctermbg=NONE ctermfg=NONE
-highlight CursorLineNr cterm=NONE ctermbg=NONE ctermfg=NONE
-highlight clear LineNr
-highlight clear SignColumn
-
-set t_8b=^[[48;2;%lu;%lu;%lum
-set t_8f=^[[38;2;%lu;%lu;%lum
+let g:gruvbox_italic=1
+let g:gruvbox_termcolors=256
+colorscheme gruvbox
 
 " Lightline
-let g:lightline = {
-      \ 'colorscheme': 'one',
-      \ 'tabline': {
-      \   'left': [ ['buffers'] ],
-      \   'right': [ ['close'] ]
-      \ },
-      \ 'component_expand': {
-      \   'buffers': 'lightline#bufferline#buffers'
-      \ },
-      \ 'component_type': {
-      \   'buffers': 'tabsel'
-      \ }
-      \ }
-set showtabline=2
+let g:airline_theme="gruvbox"
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline_powerline_fonts = 1
 
 " IndentLine
-let g:indentLine_char = ''
-let g:indentLine_first_char = ''
+let g:indentLine_char = '┆'
 
 " Gitgutter
 let g:gitgutter_sign_added = '+'
