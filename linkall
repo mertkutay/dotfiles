@@ -29,19 +29,14 @@ EOF
   fi
 fi
 
-# install zsh here
-
-
 # Install and configure zsh, oh my zsh and vim plugins
-if [ ! -d "$ZSH" ]; then
-  echo "Installing and configuring oh my zsh"
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sed 's:env zsh -l::g')"
-  echo "Installing zsh autosuggestions and syntax highlighting"
-  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-  git clone https://github.com/sindresorhus/pure.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/pure
-  rm "$HOME/.zshrc"
-fi
+echo "Installing and configuring oh my zsh"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+echo "Installing zsh autosuggestions and syntax highlighting"
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone https://github.com/sindresorhus/pure.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/pure
+rm "$HOME/.zshrc"
 
 # This appears to be the "best" way to get the canonicalized path to where this
 # script is located, which is, presumably, where all of my dotfiles are.
@@ -86,6 +81,6 @@ if [ ! -f "$HOME/.config/nvim/autoload/plug.vim" ]; then
   nvim +PlugInstall +qall
 fi
 
-if [ ! "$ZSH" ]; then
-  env zsh -l
-fi
+chsh -s /usr/bin/zsh
+su - ${USER}
+
