@@ -53,6 +53,7 @@ echo "Creating symlinks for all configuration files in $SCRIPTPATH."
 echo ""
 
 ln -s $LNOPTS "$SCRIPTPATH/config/nvim" ".config/nvim" > /dev/null 2>&1
+ln -s $LNOPTS "$SCRIPTPATH/git_template" ".git_template" > /dev/null 2>&1
 
 for dotfile in `find $SCRIPTPATH -mindepth 1 -maxdepth 1`; do
   if [[ "${dotfile##*/}" == "bashrc" ]]; then
@@ -73,6 +74,22 @@ for dotfile in `find $SCRIPTPATH -mindepth 1 -maxdepth 1`; do
     fi
   fi
   echo " $dotfile -> $linkfile... "
+done
+
+for binfile in `find $BINPATH -mindepth 1 -maxdepth 1`; do
+  linkfile=".local/bin/${binfile##*/}"
+  if [ -e "$linkfile" ]; then
+    echo -n "${yellow}Exists${reset}"
+  else
+    ln -s $LNOPTS "$binfile" "./$linkfile" > /dev/null 2>&1
+
+    if [ $? -eq 0 ]; then
+      echo -n "${green}OK${reset}    "
+    else
+      echo -n "${red}Failed${reset}"
+    fi
+  fi
+  echo " $binfile -> $linkfile... "
 done
 
 if [ ! -f "$HOME/.config/nvim/autoload/plug.vim" ]; then

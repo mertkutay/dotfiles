@@ -16,7 +16,7 @@ let g:polyglot_disabled = ['markdown']
 call plug#begin('$VIMHOME/plugged')
 Plug 'tpope/vim-sensible'
 
-Plug 'morhetz/gruvbox'
+Plug 'joshdick/onedark.vim'
 
 Plug 'vim-airline/vim-airline'
 

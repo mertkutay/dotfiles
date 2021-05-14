@@ -39,12 +39,12 @@ source $VIMHOME/coc.vim
 " Theme
 set termguicolors
 set background=dark
-let g:gruvbox_italic=1
-let g:gruvbox_termcolors=256
-colorscheme gruvbox
+let g:onedark_termcolors=256
+let g:onedark_terminal_italics=1
+colorscheme onedark
 
-" Lightline
-let g:airline_theme="gruvbox"
+" Airline
+let g:airline_theme="onedark"
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_powerline_fonts = 1
@@ -58,6 +58,7 @@ let g:gitgutter_sign_modified = '>'
 let g:gitgutter_sign_removed = '-'
 let g:gitgutter_sign_removed_first_line = '^'
 let g:gitgutter_sign_modified_removed = '<'
+let g:gitgutter_set_sign_backgrounds = 1
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gb :Gblame<CR>
 

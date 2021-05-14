@@ -1,7 +1,20 @@
-# This is Git's per-user configuration file.
 [user]
-# Please adapt and uncomment the following lines:
 	name = Mert Kutay
 	email = mertckutay@gmail.com
 [pull]
 	rebase = false
+[init]
+    templatedir = ~/.git_template
+[alias]
+	ctags = !.git/hooks/ctags
+[core]
+    pager = delta
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    features = side-by-side line-numbers decorations
+    whitespace-error-style = 22 reverse
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
