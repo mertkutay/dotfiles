@@ -50,7 +50,7 @@ case $1 in
     ;;
 
   test)
-    docker-compose run --rm django bash bin/run_tests.sh ${@:2}
+    docker-compose run --rm django pytest ${@:2}
     ;;
 
   coverage)

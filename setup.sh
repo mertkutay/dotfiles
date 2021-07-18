@@ -6,7 +6,7 @@ sudo apt install build-essential \
     ca-certificates \
     curl \
     gnupg \
-    lsb-release
+    lsb-release \
     software-properties-common \
     pkg-config \
     autoconf \
