@@ -1,12 +1,5 @@
 {
-  "eslint.filetypes": [
-    "javascript",
-    "typescript",
-    "typescriptreact",
-    "javascriptreact",
-    "typescript.tsx",
-    "vue"
-  ],
+  "diagnostic.level": "information",
   "languageserver": {
     "bash": {
       "command": "bash-language-server",
@@ -42,12 +35,16 @@
       "args": ["--stdio"]
     },
     "python": {
-      "command": "pyls",
-      "args": [],
+      "command": "python",
+      "args": ["-mpyls", "-vv", "--log-file", "/tmp/lsp_python.log"],
+      "trace.server": "verbose",
       "filetypes": ["python"],
       "settings": {
         "pyls": {
           "enable": true,
+          "trace": {
+            "server": "verbose"
+          },
           "commandPath": "",
           "configurationSources": ["pycodestyle"],
           "plugins": {
@@ -85,13 +82,13 @@
             "pyflakes": {
               "enabled": true
             },
-            "pylint": {
-              "enabled": false
-            },
             "rope_completion": {
               "enabled": true
             },
             "black": {
+              "enabled": true
+            },
+            "isort": {
               "enabled": true
             }
           }

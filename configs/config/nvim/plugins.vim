@@ -46,4 +46,5 @@ Plug 'junegunn/gv.vim'
 Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'ryanoasis/vim-devicons'
 call plug#end()

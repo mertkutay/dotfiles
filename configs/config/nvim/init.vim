@@ -20,6 +20,7 @@ set cmdheight=1
 set updatetime=200
 set shortmess+=c
 set signcolumn=yes:2
+set autoread
 let mapleader=','
 
 " Plugins
@@ -86,9 +87,9 @@ nmap \ :Rg<CR>
 
 " Remember cursor position between vim sessions
 autocmd BufReadPost *
-      \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-      \   exe "normal! g'\"" |
-      \ endif
+    \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+    \   exe "normal! g'\"" |
+    \ endif
 
 " EasyMotion
 let g:EasyMotion_do_mapping = 0
@@ -96,6 +97,12 @@ nmap s <Plug>(easymotion-overwin-f2)
 let g:EasyMotion_smartcase = 1
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
+
+
+autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
+    \ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
+autocmd FileChangedShellPost *
+    \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 "python with virtualenv support
 py3 << EOF

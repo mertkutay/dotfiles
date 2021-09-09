@@ -4,6 +4,7 @@ PATH="/usr/local/bin:$PATH"
 [ -d "$HOME/Library/Python/3.7/bin" ] && PATH="$HOME/Library/Python/3.7/bin:$PATH"
 [ -d "$HOME/go/bin" ] && PATH="$HOME/go/bin:$PATH"
 [ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
+[ -d "$HOME/.poetry/bin" ] && PATH="$HOME/.poetry/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh"  ] && \. "$NVM_DIR/nvm.sh"
@@ -44,3 +45,5 @@ export COMPOSE_DOCKER_CLI_BUILD=1
 export DOCKER_BUILDKIT=1
 
 export BAT_THEME="TwoDark"
+
+export POETRY_VIRTUALENVS_IN_PROJECT=1
