@@ -1,4 +1,4 @@
-let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-eslint', 'coc-vetur', 'coc-prettier', 'coc-css']
+let g:coc_global_extensions = ['coc-pyright', 'coc-json', 'coc-tsserver', 'coc-eslint', 'coc-vetur', 'coc-prettier', 'coc-css']
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -50,6 +50,8 @@ nmap <leader>r <Plug>(coc-rename)
 " Remap for format selected region
 vmap <leader>f <Plug>(coc-format-selected)
 nmap <leader>f <Plug>(coc-format)
+
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 
 augroup mygroup
   autocmd!

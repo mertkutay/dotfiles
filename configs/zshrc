@@ -30,15 +30,9 @@ else
   export EDITOR='nvim'
 fi
 
-vew_on_path=$(type virtualenvwrapper >/dev/null; echo $?)
-if [[ "$vew_on_path" -eq 0 || -x "$(command -v virtualenvwrapper.sh)" ]]; then
-  export VIRTUALENVWRAPPER_PYTHON=$(which python3)
-  source virtualenvwrapper.sh
-  export WORKON_HOME="$HOME/.virtualenvs"
-  if [[ ! -d $WORKON_HOME ]]; then
-    mkdir $WORKON_HOME
-  fi
-  plugins=($plugins virtualenvwrapper)
+if [[ -d "$HOME/.poetry/bin" ]]; then
+  fpath+=~/.zfunc
+  plugins=($plugins poetry)
 fi
 
 setopt autolist
@@ -58,12 +52,11 @@ prompt pure
 bindkey -v
 bindkey '^R' history-incremental-search-backward
 
-autoload -Uz add-zsh-hook
+autoload -U add-zsh-hook
 add-zsh-hook precmd set-title-precmd
 add-zsh-hook preexec set-title-preexec
+add-zsh-hook chpwd workon_cwd
 
-alias pip='pip3'
-alias python='python3'
 alias vim='nvim'
 alias ta='tmux attach'
 alias tad='tmux attach -d'
@@ -87,3 +80,14 @@ export FZF_ALT_C_COMMAND='fd --type d . --color=never'
 export FZF_DEFAULT_OPTS='--height 75% --multi --reverse --bind ctrl-f:page-down,ctrl-b:page-up'
 export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :500 {}'"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -100'"
+
+export COMPOSE_DOCKER_CLI_BUILD=1
+export DOCKER_BUILDKIT=1
+
+export BAT_THEME="TwoDark"
+
+export POETRY_VIRTUALENVS_IN_PROJECT=1
+
+if [[ -x "$(command -v brew)" ]]; then
+  export PATH="$(brew --prefix)/bin:$(brew --prefix)/sbin:$(brew --prefix)/opt/python@3.8/libexec/bin:$PATH"
+fi

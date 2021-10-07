@@ -32,7 +32,7 @@ sudo apt install neovim -y
 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 source "$HOME/.nvm/nvm.sh"
-nvm install 14
+nvm install node
 npm install -g yarn
 yarn global add bash-language-server dockerfile-language-server-nodejs
 

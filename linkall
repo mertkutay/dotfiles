@@ -98,6 +98,6 @@ if [ ! -f "$HOME/.config/nvim/autoload/plug.vim" ]; then
   nvim +PlugInstall +qall
 fi
 
-chsh -s /usr/bin/zsh
+chsh -s /bin/zsh
 su - ${USER}
 

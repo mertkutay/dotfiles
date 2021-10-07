@@ -1,19 +1,15 @@
 PATH="/usr/local/bin:$PATH"
 [ -d "/usr/local/sbin" ] && PATH="/usr/local/sbin:$PATH"
 [ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
-[ -d "$HOME/Library/Python/3.7/bin" ] && PATH="$HOME/Library/Python/3.7/bin:$PATH"
 [ -d "$HOME/go/bin" ] && PATH="$HOME/go/bin:$PATH"
 [ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
+
 [ -d "$HOME/.poetry/bin" ] && PATH="$HOME/.poetry/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh"  ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion"  ] && \. "$NVM_DIR/bash_completion"
-
-[ ! -d "${HOME}/.node_modules" ] && mkdir "${HOME}/.node_modules" && npm config set prefix "${HOME}/.node_modules"
-export NPM_PACKAGES="${HOME}/.node_modules"
-PATH="$NPM_PACKAGES/bin:$PATH"
-
+[ -x "$(command -v npm)" ] && PATH="$(npm root -g):$PATH"
 [ -x "$(command -v yarn)" ] && PATH="$(yarn global bin):$PATH"
 
 unset MANPATH
@@ -21,7 +17,7 @@ export MANPATH="${NPM_PACKAGES}/share/man:$(manpath)"
 
 # set PATH for cuda 10.1 installation
 if [ -d "/usr/local/cuda-10.1/bin/" ]; then
-    export PATH=/usr/local/cuda-10.1/bin${PATH:+:${PATH}}
+    PATH=/usr/local/cuda-10.1/bin${PATH:+:${PATH}}
     export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 fi
 
@@ -41,9 +37,12 @@ export PATH=$clean_path
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-export COMPOSE_DOCKER_CLI_BUILD=1
-export DOCKER_BUILDKIT=1
+if [[ -d "/opt/homebrew" ]]; then
+  brew_prefix=/opt/homebrew
+  eval "$($brew_prefix/bin/brew shellenv)"
+  export CFLAGS="-I$brew_prefix/include"
+  export LDFLAGS="-L$brew_prefix/lib"
 
-export BAT_THEME="TwoDark"
-
-export POETRY_VIRTUALENVS_IN_PROJECT=1
+  [ -d "$brew_prefix/opt/openblas" ] && export OPENBLAS="$brew_prefix/opt/openblas"
+  [ -d "$brew_prefix/opt/libpq" ] && PATH="$brew_prefix/opt/libpq/bin:$PATH"
+fi

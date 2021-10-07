@@ -1,17 +1,5 @@
 let $VIMHOME=expand('<sfile>:p:h')
 
-function! BuildComposer(info)
-  if a:info.status != 'unchanged' || a:info.force
-    if has('nvim')
-      !cargo build --release --locked
-    else
-      !cargo build --release --locked --no-default-features --features json-rpc
-    endif
-  endif
-endfunction
-
-let g:polyglot_disabled = ['markdown']
-
 " Plugins here
 call plug#begin('$VIMHOME/plugged')
 Plug 'tpope/vim-sensible'
@@ -42,8 +30,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'junegunn/gv.vim'
-
-Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ryanoasis/vim-devicons'
