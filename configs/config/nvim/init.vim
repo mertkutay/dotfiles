@@ -40,12 +40,13 @@ source $VIMHOME/coc.vim
 " Theme
 set termguicolors
 set background=dark
-let g:onedark_termcolors=256
-let g:onedark_terminal_italics=1
-colorscheme onedark
+let g:sonokai_style = 'shusia'
+let g:sonokai_enable_italic = 1
+let g:sonokai_disable_italic_comment = 1
+colorscheme sonokai
 
 " Airline
-let g:airline_theme="onedark"
+let g:airline_theme="sonokai"
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_powerline_fonts = 1
@@ -105,7 +106,7 @@ autocmd FileChangedShellPost *
     \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 "python with virtualenv support
-python3 << EOF
+py3 << EOF
 import os
 import sys
 if 'VIRTUAL_ENV' in os.environ:

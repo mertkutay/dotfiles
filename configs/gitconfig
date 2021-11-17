@@ -4,13 +4,9 @@
 [pull]
 	rebase = false
 [init]
-    templatedir = ~/.git_template
 	defaultBranch = master
-[alias]
-	ctags = !.git/hooks/ctags
 [core]
     pager = delta
-	excludesFile = ~/.gitignore
 [interactive]
     diffFilter = delta --color-only
 [delta]

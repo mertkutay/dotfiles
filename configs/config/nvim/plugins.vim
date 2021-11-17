@@ -4,7 +4,7 @@ let $VIMHOME=expand('<sfile>:p:h')
 call plug#begin('$VIMHOME/plugged')
 Plug 'tpope/vim-sensible'
 
-Plug 'joshdick/onedark.vim'
+Plug 'sainnhe/sonokai'
 
 Plug 'vim-airline/vim-airline'
 

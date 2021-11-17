@@ -48,3 +48,4 @@ alias lsr="ls -lhFGSr"
 
 export COMPOSE_FILE=local.yml
 export DJANGO_READ_DOT_ENV_FILE=true
+. "$HOME/.cargo/env"

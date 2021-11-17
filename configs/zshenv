@@ -4,6 +4,7 @@ PATH="/usr/local/bin:$PATH"
 [ -d "$HOME/go/bin" ] && PATH="$HOME/go/bin:$PATH"
 [ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
 
+[ -x "$(command -v python3)" ] && PATH="$(python3 -m site --user-base)/bin:$PATH"
 [ -d "$HOME/.poetry/bin" ] && PATH="$HOME/.poetry/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
@@ -46,3 +47,5 @@ if [[ -d "/opt/homebrew" ]]; then
   [ -d "$brew_prefix/opt/openblas" ] && export OPENBLAS="$brew_prefix/opt/openblas"
   [ -d "$brew_prefix/opt/libpq" ] && PATH="$brew_prefix/opt/libpq/bin:$PATH"
 fi
+
+[ -d "$HOME/.cargo" ] && . "$HOME/.cargo/env"

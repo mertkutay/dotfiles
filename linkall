@@ -53,7 +53,6 @@ echo "Creating symlinks for all configuration files in $SCRIPTPATH."
 echo ""
 
 ln -s $LNOPTS "$SCRIPTPATH/config/nvim" ".config/nvim" > /dev/null 2>&1
-ln -s $LNOPTS "$SCRIPTPATH/git_template" ".git_template" > /dev/null 2>&1
 
 for dotfile in `find $SCRIPTPATH -mindepth 1 -maxdepth 1`; do
   if [[ "${dotfile##*/}" == "bashrc" ]]; then

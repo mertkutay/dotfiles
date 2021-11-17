@@ -1,5 +1,5 @@
 {
-  "diagnostic.level": "information",
+  "diagnostic.level": "hint",
   "python.formatting.provider": "black",
   "python.linting.flake8Enabled": true,
   "python.linting.pylintEnabled": true,
