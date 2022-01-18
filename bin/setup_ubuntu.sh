@@ -53,5 +53,12 @@ wget -O "$TEMP_DEB" 'https://github.com/dandavison/delta/releases/download/0.7.1
 sudo dpkg -i "$TEMP_DEB"
 rm -f "$TEMP_DEB"
 
-./linkall
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+$ZSH_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
+git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+git clone https://github.com/sindresorhus/pure $ZSH_CUSTOM/themes/pure
+rm "$HOME/.zshrc"
 
+chsh -s /bin/zsh
+su - ${USER}

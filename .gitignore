@@ -1,3 +1,8 @@
+*~
+\#*\#
+.\#*
 .DS_Store
-configs/config/nvim/*/
-configs/config/coc/
+.emacs.d/*
+*.elc
+!.emacs.d/Emacs.org
+!.emacs.d/init.el
