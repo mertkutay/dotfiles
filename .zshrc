@@ -39,6 +39,7 @@ alias tl='tmux ls'
 alias ssh='TERM=xterm-256color ssh -A'
 alias l='ls -lhF --group-directories-first --color=always'
 alias python='python3'
+alias pip='pip3'
 
 export EDITOR=emacsclient
 export VISUAL="$EDITOR"

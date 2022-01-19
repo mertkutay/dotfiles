@@ -286,7 +286,7 @@
 
 (defun mk/org-babel-tangle-config ()
   (when (string-equal (buffer-file-name)
-                      (expand-file-name "~/.emacs.d/Emacs.org"))
+                      (expand-file-name "~/.dotfiles/.emacs.d/Emacs.org"))
     ;; Dynamic scoping to the rescue
     (let ((org-confirm-babel-evaluate nil))
       (org-babel-tangle))))
@@ -339,6 +339,13 @@
 
 (use-package py-isort
   :hook (before-save . py-isort-before-save))
+
+(use-package python-mode
+  :custom
+  (python-shell-interpreter "python3")
+  :config)
+
+(use-package ein)
 
 (use-package typescript-mode
   :mode ("\\.js\\'"
@@ -393,7 +400,8 @@
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-(use-package forge)
+(use-package forge
+  :after magit)
 
 (use-package git-gutter
   :init (global-git-gutter-mode t)
