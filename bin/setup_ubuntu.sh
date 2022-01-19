@@ -1,5 +1,4 @@
 sudo apt update -y
-sudo apt install zsh -y
 
 sudo apt install build-essential \
     apt-transport-https \
@@ -10,10 +9,11 @@ sudo apt install build-essential \
     software-properties-common \
     pkg-config \
     autoconf \
-    cmake -y
+    cmake \
+    zsh -y
 
- curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
- echo \
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo \
   "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
@@ -22,19 +22,22 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-compose -y
 sudo usermod -aG docker ${USER}
 
 sudo apt install python3-pip -y
-pip3 install virtualenvwrapper pynvim python-language-server flake8 black
-export PATH="$PATH/.local/bin"
-export VIRTUALENVWRAPPER_PYTHON=$(which python3)
-source $HOME/.local/bin/virtualenvwrapper.sh
+pip3 install flake8 black isort
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
 
-sudo add-apt-repository ppa:neovim-ppa/stable -y
-sudo apt install neovim -y
+export PATH="$PATH/.local/bin"
 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 source "$HOME/.nvm/nvm.sh"
-nvm install node
+nvm install node 14
 npm install -g yarn
-yarn global add bash-language-server dockerfile-language-server-nodejs
+yarn global add pyright \
+     typescript \
+     typescript-language-server \
+     bash-language-server \
+     docker-langserver \
+     yaml-language-server \
+     solcjs
 
 sudo apt install -o Dpkg::Options::="--force-overwrite" \
     libpq-dev \
