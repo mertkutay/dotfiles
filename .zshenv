@@ -1,39 +1,37 @@
-PATH="/usr/local/bin:$PATH"
-[ -d "/usr/local/sbin" ] && PATH="/usr/local/sbin:$PATH"
-[ -d "$HOME/.local/bin" ] && PATH="$HOME/.local/bin:$PATH"
-[ -d "$HOME/go/bin" ] && PATH="$HOME/go/bin:$PATH"
-[ -d "$HOME/.fzf/bin" ] && PATH="$HOME/.fzf/bin:$PATH"
-[ -d "$HOME/.emacs.d/bin" ] && PATH="$HOME/.emacs.d/bin:$PATH"
-[ -d "$HOME/Library/Python/3.8/bin" ] && PATH="$HOME/Library/Python/3.8/bin:$PATH"
-[ -d "$HOME/.poetry/bin" ] && PATH="$HOME/.poetry/bin:$PATH"
-[ -d "$HOME/.yarn/bin" ] && PATH="$HOME/.yarn/bin:$PATH"
-[ -d "$HOME/.cargo/bin" ] && PATH="$HOME/.cargo/bin:$PATH"
-[ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
+#!/bin/zsh
+
+pathadd() {
+  [[ -d "$1" ]] && PATH="$1${PATH:+":$PATH"}"
+}
+
+pathadd "usr/local/bin"
+pathadd "usr/local/sbin"
+pathadd "$HOME/bin"
+pathadd "$HOME/.local/bin"
+pathadd "$HOME/.fzf/bin"
+pathadd "$HOME/.emacs.d/bin"
+pathadd "$HOME/Library/Python/3.8/bin"
+pathadd "$HOME/.poetry/bin"
+pathadd "$HOME/.yarn/bin"
+pathadd "$HOME/.cargo/bin"
+pathadd "$HOME/go/bin"
 
 brew_prefix=/opt/homebrew
 if [[ -d $brew_prefix ]]; then
   eval "$($brew_prefix/bin/brew shellenv)"
   export CFLAGS="-I$brew_prefix/include"
   export LDFLAGS="-L$brew_prefix/lib"
-  [ -d "$brew_prefix/bin" ] && PATH="$brew_prefix/bin:$PATH"
-  [ -d "$brew_prefix/opt/coreutils/libexec/gnubin" ] && PATH="$brew_prefix/opt/coreutils/libexec/gnubin:$PATH"
-  [ -d "$brew_prefix/opt/libpq" ] && PATH="$brew_prefix/opt/libpq/bin:$PATH"
-  [ -d "$brew_prefix/opt/llvm@11" ] && PATH="$brew_prefix/opt/llvm@11/bin:$PATH"
+  pathadd "$brew_prefix/bin"
+  pathadd "$brew_prefix/opt/coreutils/libexec/gnubin"
+  pathadd "$brew_prefix/opt/libpq/bin"
+  pathadd "$brew_prefix/opt/llvm@11/bin"
   [ -d "$brew_prefix/opt/openblas" ] && export OPENBLAS="$brew_prefix/opt/openblas"
 fi
 
-typeset -a paths result
-paths=($path)
+[ -s "$HOME/.nvm/nvm.sh"  ] && source "$HOME/.nvm/nvm.sh"
 
-while [[ ${#paths} -gt 0 ]]; do
-  p="${paths[1]}"
-  shift paths
-  [[ -z ${paths[(r)$p]} ]] && result+="$p"
-done
-
-clean_path=${(j+:+)result}
-export PATH
-export PATH=$clean_path
+typeset -TU P=$PATH p
+export PATH=$P
 
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8

@@ -37,6 +37,8 @@ add-zsh-hook chpwd check_venv
 alias ta='tmux attach'
 alias tl='tmux ls'
 alias ssh='TERM=xterm-256color ssh -A'
+alias l='ls -lhF --group-directories-first --color=always'
+alias python='python3'
 
 export EDITOR=emacsclient
 export VISUAL="$EDITOR"
@@ -46,5 +48,4 @@ if [[ -d $HOME/.fzf ]]; then
   source "$HOME/.fzf/shell/key-bindings.zsh"
 fi
 
-[ -s "$HOME/.nvm/nvm.sh"  ] && source "$HOME/.nvm/nvm.sh"
 [ -s "$HOME/.nvm/bash_completion"  ] && source "$HOME/.nvm/bash_completion"
