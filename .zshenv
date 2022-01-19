@@ -4,8 +4,8 @@ pathadd() {
   [[ -d "$1" ]] && PATH="$1${PATH:+":$PATH"}"
 }
 
-pathadd "usr/local/bin"
-pathadd "usr/local/sbin"
+pathadd "/usr/local/bin"
+pathadd "/usr/local/sbin"
 pathadd "$HOME/bin"
 pathadd "$HOME/.local/bin"
 pathadd "$HOME/.fzf/bin"
