@@ -1,3 +1,14 @@
+(setq gc-cons-threshold (* 50 1000 1000))
+
+(defun mk/display-startup-time ()
+  (message "Emacs loaded in %s with %d garbage collections."
+           (format "%.2f seconds"
+                   (float-time
+                    (time-subtract after-init-time before-init-time)))
+           gcs-done))
+
+(add-hook 'emacs-startup-hook #'mk/display-startup-time)
+
 (setq user-full-name "Mert Kutay"
       user-mail-address "mertckutay@gmail.com")
 (setq auth-sources '("~/.authinfo"))
@@ -20,11 +31,25 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+(use-package auto-package-update
+  :custom
+  (auto-package-update-interval 7)
+  (auto-package-update-prompt-before-update t)
+  :config
+  (auto-package-update-maybe)
+  (auto-package-update-at-time "09:00"))
+
 (use-package exec-path-from-shell
+  :defer t
   :init
   (setq exec-path-from-shell-arguments nil)
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
+
+(use-package no-littering)
+
+(setq auto-save-file-name-transforms
+      `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 
 (setq inhibit-startup-message t)
 (setq ring-bell-function 'ignore)
@@ -34,11 +59,13 @@
 (tooltip-mode -1)
 (menu-bar-mode -1)
 (set-fringe-mode 10)
-(save-place-mode t)
+(save-place-mode)
+
+(if (window-system)
+    (set-frame-width (selected-frame) 100))
 
 (column-number-mode)
-(global-display-line-numbers-mode t)
-(setq display-line-numbers-type 'relative)
+(global-display-line-numbers-mode)
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
                 treemacs-mode-hook
@@ -49,21 +76,7 @@
   (add-hook mode (lambda ()
                    (display-line-numbers-mode 0))))
 
-(electric-pair-mode 1)
-(setq-default electric-pair-inhibit-predicate
-              'electric-pair-conservative-inhibit)
-(add-hook
- 'org-mode-hook
- (lambda ()
-   (setq-local electric-pair-inhibit-predicate
-               `(lambda (c)
-                  (if (char-equal c ?<)
-                      t (,electric-pair-inhibit-predicate c))))))
-
-(defvar mk/default-font-size 150)
-(defvar mk/default-variable-font-size 150)
-
-(set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height mk/default-font-size)
+(set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height 150)
 
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
@@ -73,6 +86,7 @@
 (setq mac-option-modifier nil)
 
 (use-package general
+  :after evil
   :config
   (general-create-definer rune/leader-keys
     :keymaps '(normal insert visual emacs)
@@ -90,7 +104,7 @@
   (setq evil-want-C-u-scroll t)
   (setq evil-want-C-i-jump nil)
   :config
-  (evil-mode 1)
+  (evil-mode)
   (evil-set-undo-system 'undo-redo)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
   (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
@@ -116,7 +130,20 @@
     (kbd "C-p") 'evil-mc-make-and-goto-prev-match))
 
 (use-package evil-surround
-  :config (global-evil-surround-mode 1))
+  :after evil
+  :config (global-evil-surround-mode))
+
+(defun disable-pair-for-tempo ()
+  (setq-local electric-pair-inhibit-predicate
+              `(lambda (c)
+                 (if (char-equal c ?<)
+                     t (,electric-pair-inhibit-predicate c)))))
+
+(use-package electric
+  :init (electric-pair-mode)
+  :config (setq-default electric-pair-inhibit-predicate
+                        'electric-pair-conservative-inhibit)
+  :hook (org-mode . disable-pair-for-tempo))
 
 (use-package doom-themes
   :init (load-theme 'doom-gruvbox t))
@@ -124,7 +151,7 @@
 (use-package all-the-icons)
 
 (use-package doom-modeline
-  :init (doom-modeline-mode 1)
+  :init (doom-modeline-mode)
   :custom ((doom-modeline-height 15)))
 
 (setq scroll-step 1
@@ -132,10 +159,10 @@
       scroll-conservatively 100000)
 
 (use-package which-key
+  :defer t
   :init (which-key-mode)
-  :diminish which-key-mode
-  :config
-  (setq which-key-idle-delay 0.3))
+  :diminish
+  :config (setq which-key-idle-delay 0.3))
 
 (use-package ivy
   :diminish
@@ -152,19 +179,23 @@
          :map ivy-reverse-i-search-map
          ("C-k" . ivy-previous-line)
          ("C-d" . ivy-reverse-i-search-kill))
-  :config
-  (ivy-mode 1))
+  :config (ivy-mode))
 
 (use-package ivy-rich
-  :init
-  (ivy-rich-mode 1))
+  :after ivy
+  :init (ivy-rich-mode))
 
 (use-package counsel
   :bind (("C-M-j" . 'counsel-switch-buffer)
          :map minibuffer-local-map
          ("C-r" . 'counsel-minibuffer-history))
-  :config
-  (counsel-mode 1))
+  :config (counsel-mode))
+
+(use-package ivy-prescient
+  :after ivy
+  :custom
+  (ivy-prescient-enable-filtering nil)
+  :config (ivy-prescient-mode t))
 
 (use-package helpful
   :custom
@@ -176,7 +207,8 @@
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 
-(use-package hydra)
+(use-package hydra
+  :defer t)
 
 (defhydra hydra-text-scale (:timeout 4)
   "scale text"
@@ -217,15 +249,16 @@
 
 (add-hook 'dired-mode-hook 'mk/dired-ls)
 
-(use-package
-  all-the-icons-dired
+(use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode))
 
 (defun mk/org-mode-setup ()
   (org-indent-mode)
-  (visual-line-mode 1))
+  (visual-line-mode))
 
 (use-package org
+  :pin org
+  :commands (org-capture org-agenda)
   :hook (org-mode . mk/org-mode-setup)
   :config
   (setq org-ellipsis " ")
@@ -263,7 +296,6 @@
     (lambda () (interactive) (org-capture nil "jj"))))
 
 (use-package org-bullets
-  :after org
   :hook (org-mode . org-bullets-mode)
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
@@ -271,43 +303,44 @@
 (defun mk/org-mode-visual-fill ()
   (setq visual-fill-column-width 100
         visual-fill-column-center-text t)
-  (visual-fill-column-mode 1))
+  (visual-fill-column-mode))
 
 (use-package visual-fill-column
   :hook (org-mode . mk/org-mode-visual-fill))
 
-(org-babel-do-load-languages
-  'org-babel-load-languages
-  '((emacs-lisp . t)
-    (shell . t)
-    (python . t)))
-
-(setq org-confirm-babel-evaluate nil)
+(with-eval-after-load 'org
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (shell . t)
+     (python . t)))
+  (setq org-confirm-babel-evaluate nil))
 
 (defun mk/org-babel-tangle-config ()
   (when (string-equal (buffer-file-name)
                       (expand-file-name "~/.dotfiles/.emacs.d/Emacs.org"))
-    ;; Dynamic scoping to the rescue
     (let ((org-confirm-babel-evaluate nil))
       (org-babel-tangle))))
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook 'mk/org-babel-tangle-config)))
 
-(require 'org-tempo)
+(with-eval-after-load 'org
+  (require 'org-tempo)
 
-(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-(add-to-list 'org-structure-template-alist '("sh" . "src shell"))
-(add-to-list 'org-structure-template-alist '("py" . "src python"))
+  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+  (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+  (add-to-list 'org-structure-template-alist '("py" . "src python")))
 
 (use-package flycheck
+  :defer t
   :init (global-flycheck-mode))
 
 (use-package format-all
-  :hook (prog-mode . format-all-mode))
+  :hook (prog-mode . format-all-mode)
+  (format-all-mode . format-all-ensure-formatter))
 
-(add-hook 'format-all-mode-hook 'format-all-ensure-formatter)
-
-(use-package evil-nerd-commenter)
+(use-package evil-nerd-commenter
+  :after evil)
 
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 
@@ -332,7 +365,45 @@
 (use-package lsp-treemacs
   :after lsp)
 
-(use-package lsp-ivy)
+(use-package lsp-ivy
+  :after lsp)
+
+(use-package python-mode
+  :hook (python-mode . lsp-deferred)
+  :custom
+  (python-shell-interpreter "python3")
+  :config
+  (setq python-indent-level 4))
+
+(use-package pyvenv
+  :after python-mode
+  :config
+  (setq pyvenv-mode-line-indicator
+        '(pyvenv-virtual-env-name
+          ("[venv:" pyvenv-virtual-env-name "] ")))
+  (pyvenv-mode))
+
+(defvar mk/venv-dir)
+(defvar mk/venv-changed nil)
+
+(defun mk/check-venv ()
+  (let ((venv-dir (concat (projectile-project-root) ".venv")))
+    (when (file-directory-p venv-dir)
+      (setq mk/venv-dir venv-dir)
+      (pyvenv-activate mk/venv-dir)
+      (setq mk/venv-changed t))))
+
+(add-hook 'projectile-after-switch-project-hook 'mk/check-venv)
+
+(defun mk/update-venv ()
+  (when mk/venv-changed
+    (call-interactively #'lsp-workspace-restart)
+    (setq mk/venv-changed nil)))
+
+(add-hook 'lsp-mode-hook 'mk/update-venv)
+
+(use-package poetry
+  :after python-mode)
 
 (use-package lsp-pyright
   :hook (python-mode . lsp-deferred))
@@ -340,12 +411,8 @@
 (use-package py-isort
   :hook (before-save . py-isort-before-save))
 
-(use-package python-mode
-  :custom
-  (python-shell-interpreter "python3")
-  :config)
-
-(use-package ein)
+(use-package ein
+  :after python-mode)
 
 (use-package typescript-mode
   :mode ("\\.js\\'"
@@ -391,12 +458,14 @@
     (setq projectile-project-search-path '("~/projects"))))
 
 (use-package counsel-projectile
+  :after projectile
   :config (counsel-projectile-mode)
   (counsel-projectile-modify-action
    'counsel-projectile-switch-project-action
    '((default counsel-projectile-switch-project-action-dired))))
 
 (use-package magit
+  :commands magit-status
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
@@ -404,11 +473,13 @@
   :after magit)
 
 (use-package git-gutter
-  :init (global-git-gutter-mode t)
+  :defer t
+  :init (global-git-gutter-mode)
   :custom
   (git-gutter:update-interval 2))
 
 (use-package term
+  :commands term
   :config
   (setq explicit-shell-file-name "bash")
   (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *"))
@@ -434,7 +505,6 @@
         eshell-hist-ignoredups t
         eshell-scroll-to-bottom-on-input t))
 
-(use-package eshell-git-prompt)
 
 (use-package eshell
   :hook (eshell-first-time-mode . mk/configure-shell)
@@ -443,3 +513,8 @@
     (setq eshell-destroy-buffer-when-process-dies t)
     (setq eshell-visual-commands '("htop" "zsh" "vim")))
   (eshell-git-prompt-use-theme 'robbyrussell))
+
+(use-package eshell-git-prompt
+  :after eshell)
+
+(setq gc-cons-threshold (* 2 1000 1000))

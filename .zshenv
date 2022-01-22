@@ -19,13 +19,12 @@ pathadd "$HOME/go/bin"
 brew_prefix=/opt/homebrew
 if [[ -d $brew_prefix ]]; then
   eval "$($brew_prefix/bin/brew shellenv)"
-  export CFLAGS="-I$brew_prefix/include"
-  export LDFLAGS="-L$brew_prefix/lib"
   pathadd "$brew_prefix/bin"
   pathadd "$brew_prefix/opt/coreutils/libexec/gnubin"
   pathadd "$brew_prefix/opt/libpq/bin"
   pathadd "$brew_prefix/opt/llvm@11/bin"
-  [ -d "$brew_prefix/opt/openblas" ] && export OPENBLAS="$brew_prefix/opt/openblas"
+  export CFLAGS="-I$brew_prefix/include"
+  export LDFLAGS="-L$brew_prefix/lib"
 fi
 
 [ -s "$HOME/.nvm/nvm.sh"  ] && source "$HOME/.nvm/nvm.sh"

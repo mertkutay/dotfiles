@@ -37,7 +37,8 @@ add-zsh-hook chpwd check_venv
 alias ta='tmux attach'
 alias tl='tmux ls'
 alias ssh='TERM=xterm-256color ssh -A'
-alias l='ls -lhF --group-directories-first --color=always'
+alias ls='ls --group-directories-first --color=always'
+alias l='ls -lhF'
 alias python='python3'
 alias pip='pip3'
 
