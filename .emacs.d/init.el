@@ -13,7 +13,6 @@
       user-mail-address "mertckutay@gmail.com")
 (setq auth-sources '("~/.authinfo"))
 
-;; Initialize package sources
 (require 'package)
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
@@ -24,12 +23,12 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-;; Initialize use-package on non-Linux platforms
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
 (require 'use-package)
 (setq use-package-always-ensure t)
+(setq use-package-verbose t)
 
 (use-package auto-package-update
   :custom
@@ -43,13 +42,20 @@
   :defer t
   :init
   (setq exec-path-from-shell-arguments nil)
-  (when (memq window-system '(mac ns x))
+  (when (display-graphic-p)
     (exec-path-from-shell-initialize)))
+
+(use-package server
+  :config
+  (when (not (server-running-p))
+      (server-start)))
 
 (use-package no-littering)
 
 (setq auto-save-file-name-transforms
       `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+
+(global-auto-revert-mode 1)
 
 (setq inhibit-startup-message t)
 (setq ring-bell-function 'ignore)
@@ -60,9 +66,6 @@
 (menu-bar-mode -1)
 (set-fringe-mode 10)
 (save-place-mode)
-
-(if (window-system)
-    (set-frame-width (selected-frame) 100))
 
 (column-number-mode)
 (global-display-line-numbers-mode)
@@ -76,7 +79,17 @@
   (add-hook mode (lambda ()
                    (display-line-numbers-mode 0))))
 
-(set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height 150)
+(defun mk/setup-fonts ()
+  (set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height 150)
+  (set-frame-width (selected-frame) 100)
+  (setq doom-modeline-height 15))
+
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+              (lambda (frame)
+                (with-selected-frame frame
+                  (mk/setup-fonts))))
+  (mk/setup-fonts))
 
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
@@ -151,8 +164,7 @@
 (use-package all-the-icons)
 
 (use-package doom-modeline
-  :init (doom-modeline-mode)
-  :custom ((doom-modeline-height 15)))
+  :init (doom-modeline-mode))
 
 (setq scroll-step 1
       scroll-margin 1
@@ -192,10 +204,13 @@
   :config (counsel-mode))
 
 (use-package ivy-prescient
-  :after ivy
-  :custom
-  (ivy-prescient-enable-filtering nil)
-  :config (ivy-prescient-mode t))
+  :after counsel
+  :init (setq prescient-filter-method '(literal regexp fuzzy))
+  :config
+  (ivy-prescient-mode t)
+  (prescient-persist-mode t))
+
+
 
 (use-package helpful
   :custom
@@ -218,6 +233,21 @@
 
 (rune/leader-keys
   "ts" '(hydra-text-scale/body :which-key "scale text"))
+
+(use-package centaur-tabs
+  :demand
+  :config
+  (centaur-tabs-mode t)
+  (setq centaur-tabs-cycle-scope 'tabs)
+  (setq centaur-tabs-set-icons t)
+  (setq centaur-tabs-set-bar 'under)
+  (setq x-underline-at-descent-line t)
+  (centaur-tabs-group-by-projectile-project)
+  :bind
+  (:map evil-normal-state-map
+        ("g t" . centaur-tabs-forward)
+        ("g T" . centaur-tabs-backward))
+  :hook (dired-mode . centaur-tabs-local-mode))
 
 (defvar mk/dired-hidden nil)
 
@@ -347,6 +377,9 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
+(use-package yasnippet
+  :defer t)
+
 (defun mk/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
   (lsp-headerline-breadcrumb-mode))
@@ -368,47 +401,62 @@
 (use-package lsp-ivy
   :after lsp)
 
+(use-package dap-mode
+  :defer t)
+
 (use-package python-mode
   :hook (python-mode . lsp-deferred)
   :custom
-  (python-shell-interpreter "python3")
+  (dap-python-executable "python3")
+  (dap-python-debugger 'debugpy)
   :config
-  (setq python-indent-level 4))
+  (setq python-shell-interpreter "python3")
+  (setq python-indent-offset 4)
+  (require 'dap-python))
 
 (use-package pyvenv
   :after python-mode
   :config
-  (setq pyvenv-mode-line-indicator
-        '(pyvenv-virtual-env-name
-          ("[venv:" pyvenv-virtual-env-name "] ")))
-  (pyvenv-mode))
+  (pyvenv-mode 1))
 
-(defvar mk/venv-dir)
-(defvar mk/venv-changed nil)
+;; (use-package pyvenv
+;; :after python-mode
+;; :config
+;; (setq pyvenv-mode-line-indicator
+;; '(pyvenv-virtual-env-name
+;; ("[venv:" pyvenv-virtual-env-name "] ")))
+;; (pyvenv-mode))
 
-(defun mk/check-venv ()
-  (let ((venv-dir (concat (projectile-project-root) ".venv")))
-    (when (file-directory-p venv-dir)
-      (setq mk/venv-dir venv-dir)
-      (pyvenv-activate mk/venv-dir)
-      (setq mk/venv-changed t))))
+;; (defvar mk/venv-dir)
+;; (defvar mk/venv-changed nil)
 
-(add-hook 'projectile-after-switch-project-hook 'mk/check-venv)
+;; (defun mk/check-venv ()
+;; (let ((venv-dir (concat (projectile-project-root) ".venv")))
+;; (when (file-directory-p venv-dir)
+;; (setq mk/venv-dir venv-dir)
+;; (pyvenv-activate mk/venv-dir)
+;; (setq mk/venv-changed t))))
 
-(defun mk/update-venv ()
-  (when mk/venv-changed
-    (call-interactively #'lsp-workspace-restart)
-    (setq mk/venv-changed nil)))
+;; (add-hook 'projectile-after-switch-project-hook 'mk/check-venv)
 
-(add-hook 'lsp-mode-hook 'mk/update-venv)
+;; (defun mk/update-venv ()
+;; (when mk/venv-changed
+;; (call-interactively #'lsp-workspace-restart)
+;; (setq mk/venv-changed nil)))
 
-(use-package poetry
-  :after python-mode)
+;; (add-hook 'lsp-mode-hook 'mk/update-venv)
 
 (use-package lsp-pyright
-  :hook (python-mode . lsp-deferred))
+  :after (python-mode lsp-mode))
+
+(use-package poetry
+  :after python-mode
+  :config
+  (setq poetry-tracking-strategy 'switch-buffer)
+  (poetry-tracking-mode))
 
 (use-package py-isort
+  :after python-mode
   :hook (before-save . py-isort-before-save))
 
 (use-package ein
@@ -447,18 +495,25 @@
 (use-package company-box
   :hook (company-mode . company-box-mode))
 
+(use-package company-prescient
+  :after company
+  :init (setq company-prescient-sort-length-enable nil)
+  :config (company-prescient-mode t))
+
 (use-package projectile
   :diminish projectile-mode
-  :config (projectile-mode)
   :custom ((projectile-completion-system 'ivy))
   :bind-keymap
   ("C-c p" . projectile-command-map)
   :init
   (when (file-directory-p "~/projects")
-    (setq projectile-project-search-path '("~/projects"))))
+    (setq projectile-project-search-path '("~/projects")))
+  :config (projectile-mode))
 
 (use-package counsel-projectile
   :after projectile
+  :init
+  (setq counsel-projectile-sort-files t)
   :config (counsel-projectile-mode)
   (counsel-projectile-modify-action
    'counsel-projectile-switch-project-action
@@ -504,7 +559,6 @@
         eshell-buffer-maximum-lines 10000
         eshell-hist-ignoredups t
         eshell-scroll-to-bottom-on-input t))
-
 
 (use-package eshell
   :hook (eshell-first-time-mode . mk/configure-shell)

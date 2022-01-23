@@ -42,12 +42,13 @@ alias l='ls -lhF'
 alias python='python3'
 alias pip='pip3'
 
-export EDITOR=emacsclient
+export EDITOR="$HOME/bin/editor"
 export VISUAL="$EDITOR"
+alias e="$EDITOR"
 
 if [[ -d $HOME/.fzf ]]; then
   [[ $- == *i* ]] && source "$HOME/.fzf/shell/completion.zsh" 2> /dev/null
   source "$HOME/.fzf/shell/key-bindings.zsh"
 fi
 
-[ -s "$HOME/.nvm/bash_completion"  ] && source "$HOME/.nvm/bash_completion"
+[ -s "$HOME/.nvm/bash_completion" ] && source "$HOME/.nvm/bash_completion"
