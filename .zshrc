@@ -14,6 +14,16 @@ plugins=(
     zsh-syntax-highlighting
 )
 
+alias python="python3"
+alias pip="pip3"
+vew_script=$(which virtualenvwrapper.sh)
+if [ -x "$vew_script" ] ; then
+    export VIRTUALENVWRAPPER_PYTHON=$(which python3)
+    export WORKON_HOME="$HOME/.virtualenvs"
+    source "$vew_script"
+    plugins=($plugins virtualenvwrapper)
+fi
+
 setopt autolist
 setopt cdablevars
 setopt autonamedirs
@@ -30,17 +40,12 @@ prompt pure
 bindkey -v
 bindkey '^R' history-incremental-search-backward
 
-source "$HOME/.dotfiles/.zsh_functions"
-autoload -U add-zsh-hook
-add-zsh-hook chpwd check_venv
-
-alias ta='tmux attach'
-alias tl='tmux ls'
-alias ssh='TERM=xterm-256color ssh -A'
-alias ls='ls --group-directories-first --color=always'
-alias l='ls -lhF'
-alias python='python3'
-alias pip='pip3'
+alias t="tmux"
+alias ta="tmux attach"
+alias tl="tmux ls"
+alias ssh="TERM=xterm-256color ssh -A"
+alias ls="ls --group-directories-first --color=always"
+alias l="ls -lhF"
 
 export EDITOR="$HOME/bin/editor"
 export VISUAL="$EDITOR"

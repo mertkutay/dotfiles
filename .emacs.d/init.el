@@ -159,7 +159,7 @@
   :hook (org-mode . disable-pair-for-tempo))
 
 (use-package doom-themes
-  :init (load-theme 'doom-gruvbox t))
+  :init (load-theme 'doom-snazzy t))
 
 (use-package all-the-icons)
 
@@ -205,12 +205,9 @@
 
 (use-package ivy-prescient
   :after counsel
-  :init (setq prescient-filter-method '(literal regexp fuzzy))
   :config
   (ivy-prescient-mode t)
   (prescient-persist-mode t))
-
-
 
 (use-package helpful
   :custom
@@ -240,14 +237,12 @@
   (centaur-tabs-mode t)
   (setq centaur-tabs-cycle-scope 'tabs)
   (setq centaur-tabs-set-icons t)
-  (setq centaur-tabs-set-bar 'under)
-  (setq x-underline-at-descent-line t)
+  (setq centaur-tabs-set-bar 'over)
   (centaur-tabs-group-by-projectile-project)
   :bind
   (:map evil-normal-state-map
         ("g t" . centaur-tabs-forward)
-        ("g T" . centaur-tabs-backward))
-  :hook (dired-mode . centaur-tabs-local-mode))
+        ("g T" . centaur-tabs-backward)))
 
 (defvar mk/dired-hidden nil)
 
@@ -417,43 +412,20 @@
 (use-package pyvenv
   :after python-mode
   :config
-  (pyvenv-mode 1))
-
-;; (use-package pyvenv
-;; :after python-mode
-;; :config
-;; (setq pyvenv-mode-line-indicator
-;; '(pyvenv-virtual-env-name
-;; ("[venv:" pyvenv-virtual-env-name "] ")))
-;; (pyvenv-mode))
-
-;; (defvar mk/venv-dir)
-;; (defvar mk/venv-changed nil)
-
-;; (defun mk/check-venv ()
-;; (let ((venv-dir (concat (projectile-project-root) ".venv")))
-;; (when (file-directory-p venv-dir)
-;; (setq mk/venv-dir venv-dir)
-;; (pyvenv-activate mk/venv-dir)
-;; (setq mk/venv-changed t))))
-
-;; (add-hook 'projectile-after-switch-project-hook 'mk/check-venv)
-
-;; (defun mk/update-venv ()
-;; (when mk/venv-changed
-;; (call-interactively #'lsp-workspace-restart)
-;; (setq mk/venv-changed nil)))
-
-;; (add-hook 'lsp-mode-hook 'mk/update-venv)
+  (pyvenv-mode 1)
+  (setq pyvenv-post-activate-hooks
+        (list (lambda ()
+                (setq python-shell-interpreter
+                      (concat pyvenv-virtual-env "bin/python")))))
+  (setq pyvenv-post-deactivate-hooks
+        (list (lambda ()
+                (setq python-shell-interpreter "python3")))))
 
 (use-package lsp-pyright
   :after (python-mode lsp-mode))
 
 (use-package poetry
-  :after python-mode
-  :config
-  (setq poetry-tracking-strategy 'switch-buffer)
-  (poetry-tracking-mode))
+  :after python-mode)
 
 (use-package py-isort
   :after python-mode
