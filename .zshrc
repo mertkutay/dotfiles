@@ -1,3 +1,17 @@
+#!/bin/zsh
+
+# Tramp
+if [[ "$TERM" == "dumb"  ]]
+then
+  unsetopt zle
+  unsetopt prompt_cr
+  unsetopt prompt_subst
+  unfunction precmd
+  unfunction preexec
+  PS1='$ '
+  return
+fi
+
 ZSH="$HOME/.oh-my-zsh"
 
 DEFAULT_USER=`whoami`
