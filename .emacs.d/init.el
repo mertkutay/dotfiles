@@ -233,12 +233,12 @@
 
 (use-package centaur-tabs
   :demand
-  :config
-  (centaur-tabs-mode t)
+  :init
   (setq centaur-tabs-cycle-scope 'tabs)
   (setq centaur-tabs-set-icons t)
   (setq centaur-tabs-set-bar 'over)
-  (centaur-tabs-group-by-projectile-project)
+  :config
+  (centaur-tabs-mode t)
   :bind
   (:map evil-normal-state-map
         ("g t" . centaur-tabs-forward)
@@ -440,6 +440,9 @@
   :hook (typescript-mode . lsp-deferred)
   :config
   (setq typescript-indent-level 2))
+
+(use-package vue-mode
+  :hook (vue-mode . lsp-deferred))
 
 (use-package yaml-mode
   :mode ("\\.yml\\'"
