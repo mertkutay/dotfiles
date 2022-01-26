@@ -264,7 +264,6 @@
   :commands (dired dired-jump)
   :bind (("C-x C-j" . dired-jump))
   :config
-  (setq trash-directory "~/.Trash")
   (setq delete-by-moving-to-trash t)
   (setq dired-kill-when-opening-new-dired-buffer t)
   (evil-collection-define-key 'normal 'dired-mode-map
@@ -273,6 +272,12 @@
     "H" 'mk/dired-hidden-switch))
 
 (add-hook 'dired-mode-hook 'mk/dired-ls)
+
+(when (eq system-type 'darwin)
+  (use-package osx-trash
+    :after dired
+    :config
+    (osx-trash-setup)))
 
 (use-package all-the-icons-dired
   :hook (dired-mode . all-the-icons-dired-mode))
