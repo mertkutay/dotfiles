@@ -11,7 +11,6 @@
 
 (setq user-full-name "Mert Kutay"
       user-mail-address "mertckutay@gmail.com")
-(setq auth-sources '("~/.authinfo"))
 
 (require 'package)
 
@@ -101,12 +100,12 @@
 (use-package general
   :after evil
   :config
-  (general-create-definer rune/leader-keys
+  (general-create-definer mk/leader-keys
     :keymaps '(normal insert visual emacs)
     :prefix "SPC"
     :global-prefix "C-SPC")
 
-  (rune/leader-keys
+  (mk/leader-keys
     "t"  '(:ignore t :which-key "toggles")
     "tt" '(counsel-load-theme :which-key "choose theme")))
 
@@ -228,8 +227,25 @@
   ("k" text-scale-decrease "out")
   ("f" nil "finished" :exit t))
 
-(rune/leader-keys
+(mk/leader-keys
   "ts" '(hydra-text-scale/body :which-key "scale text"))
+
+(setf epa-pinentry-mode 'loopback)
+
+(use-package password-store
+  :after general
+  :config
+  (setq password-store-password-length 12)
+  (mk/leader-keys
+    "ap" '(:ignore t :which-key "pass")
+    "app" 'password-store-copy
+    "api" 'password-store-insert
+    "apg" 'password-store-generate))
+
+(use-package auth-source-pass
+  :after password-store
+  :config
+  (auth-source-pass-enable))
 
 (use-package centaur-tabs
   :demand
@@ -452,6 +468,9 @@
 (use-package yaml-mode
   :mode ("\\.yml\\'"
          "\\.yaml\\'"))
+
+(use-package csv-mode
+  :mode ("\\.csv\\'"))
 
 (use-package dockerfile-mode
   :mode ("\\Dockerfile\\'"
