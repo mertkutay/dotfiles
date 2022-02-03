@@ -10,6 +10,7 @@ sudo apt install build-essential \
     pkg-config \
     autoconf \
     cmake \
+    emacs \
     zsh -y
 
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -22,7 +23,7 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-compose -y
 sudo usermod -aG docker ${USER}
 
 sudo apt install python3-pip -y
-pip3 install flake8 black isort
+pip3 install virtualenvwrapper
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
 
 export PATH="$PATH/.local/bin"
@@ -57,11 +58,11 @@ sudo dpkg -i "$TEMP_DEB"
 rm -f "$TEMP_DEB"
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-$ZSH_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
+ZSH_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
+mkdir -p $ZSH_CUSTOM
 git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 git clone https://github.com/sindresorhus/pure $ZSH_CUSTOM/themes/pure
-rm "$HOME/.zshrc"
 
 chsh -s /bin/zsh
 su - ${USER}

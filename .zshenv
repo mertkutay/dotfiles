@@ -35,6 +35,7 @@ export PATH=$P
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
+export COMPOSE_DOCKER_CLI_BUILD=1
 export DOCKER_BUILDKIT=1
 export BAT_THEME="TwoDark"
 export FZF_DEFAULT_COMMAND='fd --type f --color=never'

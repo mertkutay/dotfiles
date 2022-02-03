@@ -18,7 +18,7 @@ case $1 in
     ;;
 
   prune)
-    docker system prune -a
+    docker system prune
     ;;
 
   logs)
@@ -27,6 +27,18 @@ case $1 in
 
   shell)
     docker-compose run --rm $2 bash
+    ;;
+
+  format)
+    bash scripts/format.sh
+    ;;
+
+  lint)
+    bash scripts/lint.sh
+    ;;
+
+  get-env)
+    python3 scripts/get_dot_env.py $2
     ;;
 
   manage)
@@ -50,15 +62,35 @@ case $1 in
     ;;
 
   test)
-    docker-compose run --rm django pytest ${@:2}
+    docker-compose run --rm django bash scripts/test.sh ${@:2}
     ;;
 
   coverage)
     docker-compose run --rm django bash -c 'coverage html && coverage report'
     ;;
 
-  script)
-    docker-compose run --rm django python manage.py runscript ${@:2}
+  dumpdata)
+    docker-compose run --rm django python manage.py dumpdata ${@:2}
+    ;;
+
+  loaddata)
+    docker-compose run --rm django python manage.py loaddata ${@:2}
+    ;;
+
+  makemessages)
+    docker-compose run --rm django python manage.py makemessages ${@:2}
+    ;;
+
+  compilemessages)
+    docker-compose run --rm django python manage.py compilemessages ${@:2}
+    ;;
+
+  update_translation_fields)
+    docker-compose run --rm django python manage.py update_translation_fields ${@:2}
+    ;;
+
+  compile-emails)
+    bash scripts/compile-emails.sh
     ;;
 
   notebook)

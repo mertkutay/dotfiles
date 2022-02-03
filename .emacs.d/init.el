@@ -79,7 +79,11 @@
                    (display-line-numbers-mode 0))))
 
 (defun mk/setup-fonts ()
-  (set-face-attribute 'default nil :font "SauceCodePro Nerd Font Mono" :height 150)
+  (if (eq system-type 'darwin)
+      (setq mk/font-height 150)
+    (setq mk/font-height 130))
+  (set-face-attribute 'default nil
+                      :font "SauceCodePro Nerd Font Mono" :height mk/font-height)
   (set-frame-width (selected-frame) 100)
   (setq doom-modeline-height 15))
 
@@ -117,7 +121,6 @@
   (setq evil-want-C-i-jump nil)
   :config
   (evil-mode)
-  (evil-set-undo-system 'undo-redo)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
   (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
   (define-key evil-window-map (kbd "C-h") 'evil-window-left)
@@ -132,6 +135,12 @@
 (use-package evil-collection
   :after evil
   :config (evil-collection-init))
+
+(use-package undo-tree
+  :after evil
+  :config
+  (global-undo-tree-mode)
+  (evil-set-undo-system 'undo-tree))
 
 (use-package evil-mc
   :after evil
@@ -159,6 +168,10 @@
 
 (use-package doom-themes
   :init (load-theme 'doom-snazzy t))
+
+(use-package solaire-mode
+  :init
+  (solaire-global-mode t))
 
 (use-package all-the-icons)
 
