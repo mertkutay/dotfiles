@@ -47,7 +47,7 @@
 (use-package server
   :config
   (when (not (server-running-p))
-      (server-start)))
+    (server-start)))
 
 (use-package no-littering)
 
@@ -328,31 +328,50 @@
 
   (setq org-directory "~/org/")
   (setq org-agenda-files
-        '("~/org/Tasks.org"))
+        (list (concat org-directory "tasks.org")
+              (concat org-directory "habits.org")))
 
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
   (setq org-habit-graph-column 60)
 
   (setq org-todo-keywords
-    '((sequence "TODO(t)" "PROGRESS(p)" "|" "DONE(d!)")))
+        '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")))
 
   (setq org-refile-targets
-    '(("Tasks.org" :maxlevel . 1)))
+        '(("archive.org" :maxlevel . 1)
+          ("tasks.org" :maxlevel . 1)))
 
-  ;; Save Org buffers after refiling!
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
   (setq org-tag-alist
-    '((:startgroup)
-       ; Put mutually exclusive tags here
-       (:endgroup)
-       ("@errand" . ?E)
-       ("@home" . ?H)
-       ("@work" . ?W)))
+        '(("errand" . ?E)
+          ("home" . ?H)
+          ("work" . ?W)
+          ("dev" . ?D)))
 
-  (define-key global-map (kbd "C-c j")
-    (lambda () (interactive) (org-capture nil "jj"))))
+  (setq org-agenda-custom-commands
+        '(("d" "Dashboard"
+           ((agenda "" ((org-deadline-warning-days 7)))
+            (todo "NEXT"
+                  ((org-agenda-overriding-header "Next Tasks")))))
+          ("W" "Work Tasks" tags-todo "+work")))
+
+  (setq org-capture-templates
+        `(("t" "Task" entry (file+olp ,(concat org-directory "tasks.org") "Active")
+           "* TODO %? %^g\n  %U\n  %i" :empty-lines 1)
+          ("n" "Notes" entry (file+olp+datetree ,(concat org-directory "notes.org") "Notes")
+           "* %?\n  %U\n  %i" :empty-lines 1)))
+
+  (global-set-key (kbd "C-c a") #'org-agenda)
+  (global-set-key (kbd "C-c c") #'org-capture))
+
+(use-package evil-org
+  :after org
+  :hook (org-mode . (lambda () evil-org-mode))
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode)

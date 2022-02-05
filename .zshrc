@@ -24,6 +24,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 plugins=(
     git
     colorize
+    pass
     zsh-autosuggestions
     zsh-syntax-highlighting
 )
