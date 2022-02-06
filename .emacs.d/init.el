@@ -70,6 +70,7 @@
 (global-display-line-numbers-mode)
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
+                org-agenda-mode-hook
                 treemacs-mode-hook
                 term-mode-hook
                 vterm-mode-hook
@@ -320,29 +321,11 @@
   :commands (org-capture org-agenda)
   :hook (org-mode . mk/org-mode-setup)
   :config
-  (setq org-ellipsis " ")
-
-  (setq org-agenda-start-with-log-mode t)
-  (setq org-log-done 'time)
-  (setq org-log-into-drawer t)
-
   (setq org-directory "~/org/")
-  (setq org-agenda-files
-        (list (concat org-directory "tasks.org")
-              (concat org-directory "habits.org")))
-
-  (require 'org-habit)
-  (add-to-list 'org-modules 'org-habit)
-  (setq org-habit-graph-column 60)
+  (setq org-ellipsis " ")
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")))
-
-  (setq org-refile-targets
-        '(("archive.org" :maxlevel . 1)
-          ("tasks.org" :maxlevel . 1)))
-
-  (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
   (setq org-tag-alist
         '(("errand" . ?E)
@@ -350,11 +333,26 @@
           ("work" . ?W)
           ("dev" . ?D)))
 
+  (setq org-log-done 'time)
+  (setq org-log-into-drawer t)
+
+  (setq org-refile-targets
+        '(("archive.org" :maxlevel . 1)
+          ("tasks.org" :maxlevel . 1)))
+  (advice-add 'org-refile :after 'org-save-all-org-buffers)
+
+  (setq org-agenda-files
+        (list (concat org-directory "tasks.org")
+              (concat org-directory "habits.org")))
+  (setq org-agenda-start-with-log-mode t)
+  (setq org-agenda-tags-column (- 4 (window-width)))
   (setq org-agenda-custom-commands
         '(("d" "Dashboard"
-           ((agenda "" ((org-deadline-warning-days 7)))
-            (todo "NEXT"
-                  ((org-agenda-overriding-header "Next Tasks")))))
+           ((todo "NEXT"
+                  ((org-agenda-overriding-header "Next Tasks")))
+            (agenda ""
+                    ((org-deadline-warning-days 7)
+                     (org-agenda-start-on-weekday nil)))))
           ("W" "Work Tasks" tags-todo "+work")))
 
   (setq org-capture-templates
@@ -362,6 +360,10 @@
            "* TODO %? %^g\n  %U\n  %i" :empty-lines 1)
           ("n" "Notes" entry (file+olp+datetree ,(concat org-directory "notes.org") "Notes")
            "* %?\n  %U\n  %i" :empty-lines 1)))
+
+  (require 'org-habit)
+  (add-to-list 'org-modules 'org-habit)
+  (setq org-habit-graph-column 60)
 
   (global-set-key (kbd "C-c a") #'org-agenda)
   (global-set-key (kbd "C-c c") #'org-capture))
@@ -384,7 +386,9 @@
   (visual-fill-column-mode))
 
 (use-package visual-fill-column
-  :hook (org-mode . mk/org-mode-visual-fill))
+  :hook
+  (org-mode . mk/org-mode-visual-fill)
+  (org-agenda-mode . mk/org-mode-visual-fill))
 
 (with-eval-after-load 'org
   (org-babel-do-load-languages
