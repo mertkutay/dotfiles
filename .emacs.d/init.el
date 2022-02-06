@@ -44,6 +44,8 @@
   (when (display-graphic-p)
     (exec-path-from-shell-initialize)))
 
+(set-default-coding-systems 'utf-8)
+
 (use-package server
   :config
   (when (not (server-running-p))
@@ -561,12 +563,6 @@
 
 (use-package forge
   :after magit)
-
-(use-package git-gutter
-  :defer t
-  :init (global-git-gutter-mode)
-  :custom
-  (git-gutter:update-interval 2))
 
 (use-package term
   :commands term

@@ -77,6 +77,14 @@
 
 #+end_src
 
+* Coding System
+
+#+begin_src emacs-lisp
+
+  (set-default-coding-systems 'utf-8)
+
+#+end_src
+
 * Server Mode
 
 #+begin_src emacs-lisp
@@ -872,12 +880,6 @@
 
   (use-package forge
     :after magit)
-
-  (use-package git-gutter
-    :defer t
-    :init (global-git-gutter-mode)
-    :custom
-    (git-gutter:update-interval 2))
 
 #+end_src
 
