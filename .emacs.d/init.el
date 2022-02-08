@@ -365,10 +365,10 @@
 
   (require 'org-habit)
   (add-to-list 'org-modules 'org-habit)
-  (setq org-habit-graph-column 60)
+  (setq org-habit-graph-column 60))
 
-  (global-set-key (kbd "C-c a") #'org-agenda)
-  (global-set-key (kbd "C-c c") #'org-capture))
+(global-set-key (kbd "C-c a") #'org-agenda)
+(global-set-key (kbd "C-c c") #'org-capture)
 
 (use-package evil-org
   :after org
@@ -554,7 +554,7 @@
   :config (counsel-projectile-mode)
   (counsel-projectile-modify-action
    'counsel-projectile-switch-project-action
-   '((default counsel-projectile-switch-project-action-dired))))
+   '((default counsel-projectile-switch-project-action-vc))))
 
 (use-package magit
   :commands magit-status
@@ -563,6 +563,16 @@
 
 (use-package forge
   :after magit)
+
+(use-package diff-hl
+  :after magit
+  :hook
+  (magit-pre-refresh . diff-hl-magit-pre-refresh)
+  (magit-post-refresh . diff-hl-magit-post-refresh)
+  :init
+  (global-diff-hl-mode)
+  :config
+  (setq diff-hl-disable-on-remote t))
 
 (use-package term
   :commands term
