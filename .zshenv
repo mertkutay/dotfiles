@@ -28,6 +28,7 @@ if [[ -d $brew_prefix ]]; then
 fi
 
 [ -s "$HOME/.nvm/nvm.sh"  ] && source "$HOME/.nvm/nvm.sh"
+[ -s "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 
 typeset -TU P=$PATH p
 export PATH=$P

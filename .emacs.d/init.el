@@ -210,7 +210,10 @@
 
 (use-package ivy-rich
   :after ivy
-  :init (ivy-rich-mode))
+  :init (ivy-rich-mode)
+  :custom
+  (ivy-rich-parse-remote-buffer nil)
+  (ivy-rich-parse-remote-file-path nil))
 
 (use-package counsel
   :bind (("C-M-j" . 'counsel-switch-buffer)
@@ -516,6 +519,11 @@
 
 (use-package docker
   :bind ("C-c d" . docker))
+
+(use-package rust-mode
+  :hook (rust-mode . lsp-deferred)
+  :config
+  (setq rust-format-on-save t))
 
 (use-package company
   :after lsp-mode
