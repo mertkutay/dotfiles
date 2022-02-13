@@ -170,7 +170,7 @@
   :hook (org-mode . disable-pair-for-tempo))
 
 (use-package doom-themes
-  :init (load-theme 'doom-snazzy t))
+  :init (load-theme 'doom-gruvbox t))
 
 (use-package solaire-mode
   :init
@@ -336,6 +336,8 @@
         '(("errand" . ?E)
           ("home" . ?H)
           ("work" . ?W)
+          ("school" . ?S)
+          ("personal" . ?P)
           ("dev" . ?D)))
 
   (setq org-log-done 'time)
