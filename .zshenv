@@ -15,6 +15,7 @@ pathadd "$HOME/.poetry/bin"
 pathadd "$HOME/.yarn/bin"
 pathadd "$HOME/.cargo/bin"
 pathadd "$HOME/go/bin"
+pathadd "/usr/local/go/bin"
 
 brew_prefix=/opt/homebrew
 if [[ -d $brew_prefix ]]; then

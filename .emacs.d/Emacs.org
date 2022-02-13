@@ -648,7 +648,8 @@
 #+begin_src emacs-lisp
 
   (use-package format-all
-    :hook (prog-mode . format-all-mode)
+    :hook
+    (prog-mode . format-all-mode)
     (format-all-mode . format-all-ensure-formatter))
 
 #+end_src
@@ -684,7 +685,7 @@
 #+begin_src emacs-lisp
 
   (use-package yasnippet
-    :defer t)
+    :hook (prog-mode . yas-minor-mode))
 
 #+end_src
 
@@ -829,6 +830,15 @@
     :hook (rust-mode . lsp-deferred)
     :config
     (setq rust-format-on-save t))
+
+#+end_src
+
+*** Go
+
+#+begin_src emacs-lisp
+
+  (use-package go-mode
+    :hook (go-mode . lsp-deferred))
 
 #+end_src
 

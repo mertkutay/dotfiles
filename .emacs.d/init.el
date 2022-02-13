@@ -423,7 +423,8 @@
   :init (global-flycheck-mode))
 
 (use-package format-all
-  :hook (prog-mode . format-all-mode)
+  :hook
+  (prog-mode . format-all-mode)
   (format-all-mode . format-all-ensure-formatter))
 
 (use-package evil-nerd-commenter
@@ -435,7 +436,7 @@
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package yasnippet
-  :defer t)
+  :hook (prog-mode . yas-minor-mode))
 
 (defun mk/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
@@ -524,6 +525,9 @@
   :hook (rust-mode . lsp-deferred)
   :config
   (setq rust-format-on-save t))
+
+(use-package go-mode
+  :hook (go-mode . lsp-deferred))
 
 (use-package company
   :after lsp-mode
