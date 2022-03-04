@@ -1,14 +1,5 @@
 (setq gc-cons-threshold (* 50 1000 1000))
 
-(defun mk/display-startup-time ()
-  (message "Emacs loaded in %s with %d garbage collections."
-           (format "%.2f seconds"
-                   (float-time
-                    (time-subtract after-init-time before-init-time)))
-           gcs-done))
-
-(add-hook 'emacs-startup-hook #'mk/display-startup-time)
-
 (setq user-full-name "Mert Kutay"
       user-mail-address "mertckutay@gmail.com")
 
@@ -553,7 +544,9 @@
 
 (use-package projectile
   :diminish projectile-mode
-  :custom ((projectile-completion-system 'ivy))
+  :custom
+  ((projectile-completion-system 'ivy)
+   (projectile-enable-caching t))
   :bind-keymap
   ("C-c p" . projectile-command-map)
   :init
@@ -625,5 +618,20 @@
 
 (use-package eshell-git-prompt
   :after eshell)
+
+(use-package dashboard
+  :config
+  (setq dashboard-startup-banner 'logo)
+  (setq dashboard-center-content t)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-set-navigator t)
+  (setq dashboard-set-init-info t)
+  (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-action-vc)
+  (setq dashboard-items '((recents  . 5)
+                          (bookmarks . 5)
+                          (projects . 5)
+                          (agenda . 5)))
+  (dashboard-setup-startup-hook))
 
 (setq gc-cons-threshold (* 2 1000 1000))
