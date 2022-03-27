@@ -56,7 +56,7 @@
 (tool-bar-mode -1)
 (tooltip-mode -1)
 (menu-bar-mode -1)
-(set-fringe-mode 10)
+(set-fringe-mode '(4 . 4))
 (save-place-mode)
 
 (column-number-mode)
@@ -161,7 +161,7 @@
   :hook (org-mode . disable-pair-for-tempo))
 
 (use-package doom-themes
-  :init (load-theme 'doom-gruvbox t))
+  :init (load-theme 'doom-molokai t))
 
 (use-package solaire-mode
   :init
@@ -431,6 +431,9 @@
 (use-package yasnippet
   :hook (prog-mode . yas-minor-mode))
 
+(use-package yasnippet-snippets
+  :after yasnippet)
+
 (defun mk/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
   (lsp-headerline-breadcrumb-mode))
@@ -521,6 +524,11 @@
 
 (use-package go-mode
   :hook (go-mode . lsp-deferred))
+
+(use-package emmet-mode
+  :hook
+  (sgml-mode . emmet-mode)
+  (css-mode . emmet-mode))
 
 (use-package company
   :after lsp-mode

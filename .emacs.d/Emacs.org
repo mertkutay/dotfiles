@@ -119,7 +119,7 @@
   (tool-bar-mode -1)
   (tooltip-mode -1)
   (menu-bar-mode -1)
-  (set-fringe-mode 10)
+  (set-fringe-mode '(4 . 4))
   (save-place-mode)
 
 #+end_src
@@ -272,7 +272,7 @@
 #+begin_src emacs-lisp
 
   (use-package doom-themes
-    :init (load-theme 'doom-gruvbox t))
+    :init (load-theme 'doom-molokai t))
 
   (use-package solaire-mode
     :init
@@ -680,6 +680,9 @@
   (use-package yasnippet
     :hook (prog-mode . yas-minor-mode))
 
+  (use-package yasnippet-snippets
+    :after yasnippet)
+
 #+end_src
 
 ** Languages
@@ -832,6 +835,17 @@
 
   (use-package go-mode
     :hook (go-mode . lsp-deferred))
+
+#+end_src
+
+*** HTML
+
+#+begin_src emacs-lisp
+
+  (use-package emmet-mode
+    :hook
+    (sgml-mode . emmet-mode)
+    (css-mode . emmet-mode))
 
 #+end_src
 

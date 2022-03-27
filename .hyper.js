@@ -57,7 +57,11 @@ module.exports = {
     disableAutoUpdates: false,
     screenReaderMode: false,
   },
-  plugins: ["hyper-snazzy", "hyper-hide-title"],
+  plugins: ["hyper-snazzy", "hyper-transparent", "hyper-hide-title"],
   localPlugins: [],
   keymaps: {},
+  hyperTransparent: {
+    opacity: 0.9,
+    vibrancy: "",
+  },
 };
