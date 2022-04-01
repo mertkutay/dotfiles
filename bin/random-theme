@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+
+WP_FILE=$HOME/.config/wallpaper.jpg
+wget -q -O "$WP_FILE" https://source.unsplash.com/1920x1080/?$1
+
+if [[ -f "${WP_FILE}" ]]; then
+    wal -i $WP_FILE
+    wal-alacritty
+    brew services restart yabai
+fi

@@ -6,7 +6,7 @@ case $1 in
     ;;
 
   up)
-    docker-compose up ${@:2}
+    docker-compose up --no-log-prefix ${@:2}
     ;;
 
   stop)
@@ -22,7 +22,7 @@ case $1 in
     ;;
 
   logs)
-    docker-compose logs -f --tail 100 $2
+    docker-compose logs -f --no-log-prefix --tail 100 $2
     ;;
 
   shell)

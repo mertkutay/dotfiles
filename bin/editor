@@ -1,9 +1,0 @@
-#!/bin/zsh
-
-if [ "$#" -eq 0 ]; then
-  file=`pwd`
-else
-  file="$@"
-fi
-
-emacsclient "${file}" -a emacs
