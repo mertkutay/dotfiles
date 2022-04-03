@@ -13,7 +13,7 @@ local opts = { noremap = true }
 local buf_keymap = vim.api.nvim_buf_set_keymap
 
 function _G.set_terminal_keymaps()
-	buf_keymap(0, "t", "<C-w>", [[<C-\><C-n><C-w><C-w>]], opts)
+	buf_keymap(0, "t", "<C-w>", [[<C-\><C-n><C-w>]], opts)
 end
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 

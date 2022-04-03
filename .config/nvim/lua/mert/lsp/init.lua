@@ -2,8 +2,10 @@ require("mert.lsp.setup")
 require("mert.lsp.null-ls")
 
 local lsp_status = require("lsp-status")
-
 lsp_status.register_progress()
+
+local lsp_signature = require("lsp_signature")
+lsp_signature.setup()
 
 local function setup_lsp_keymaps(bufnr)
 	local opts = { noremap = true, silent = true }
@@ -42,6 +44,7 @@ require("nvim-lsp-installer").on_server_ready(function(server)
 			setup_lsp_keymaps(bufnr)
 			setup_document_highlighting(client)
 			lsp_status.on_attach(client)
+			lsp_signature.on_attach()
 		end,
 		capabilities = capabilities,
 	}

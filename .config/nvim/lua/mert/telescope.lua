@@ -1,6 +1,7 @@
+local telescope = require("telescope")
 local actions = require("telescope.actions")
 
-require("telescope").setup({
+telescope.setup({
 	defaults = {
 		prompt_prefix = " ",
 		selection_caret = " ",
@@ -23,3 +24,5 @@ require("telescope").setup({
 		},
 	},
 })
+
+telescope.load_extension("fzf")

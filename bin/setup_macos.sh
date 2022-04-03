@@ -16,9 +16,11 @@ brew install \
     neovim alacritty bluesnooze \
     ripgrep fd fzf \
     libpq openssl ffmpeg \
-    jq imagemagick neofetch fortune \
+    jq pidof imagemagick neofetch fortune \
     koekeishiya/formulae/yabai koekeishiya/formulae/skhd
 
+set -Ux PYENV_ROOT $HOME/.pyenv
+set -U fish_user_paths $PYENV_ROOT/bin $fish_user_paths
 pyenv install 3.9.11
 pyenv global 3.9.11
 pip install flake8 black isort ipython pywal

@@ -9,20 +9,13 @@ for _, sign in ipairs(signs) do
 	vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
 end
 
-vim.cmd("hi LspReferenceText cterm=bold gui=bold")
-vim.cmd("hi LspReferenceRead cterm=bold gui=bold")
-vim.cmd("hi LspReferenceWrite cterm=bold gui=bold")
-
 vim.diagnostic.config({
-	virtual_text = false,
 	signs = {
 		active = signs,
 	},
 	update_in_insert = true,
 	severity_sort = true,
 	float = {
-		focusable = false,
-		style = "minimal",
 		border = "rounded",
 		source = "always",
 		header = "",

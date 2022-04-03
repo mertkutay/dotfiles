@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 
-
 WP_FILE=$HOME/.config/wallpaper.jpg
+
+# WP_URL=$(wget -O - https://www.reddit.com/r/wallpaper | grep -Eo 'https?://i\.redd\.it[^"&]+(jpe?g|png|gif)' | shuf -n 1)
+# wget -q -O "$WP_FILE" "$WP_URL"
+
 wget -q -O "$WP_FILE" https://source.unsplash.com/1920x1080/?$1
 
 if [[ -f "${WP_FILE}" ]]; then
-    wal -i $WP_FILE
-    wal-alacritty
-    brew services restart yabai
+  rm -rf ~/.cache/wal/
+  wal -e -i $WP_FILE
+  kitty @ set-colors --all --configured ~/.config/kitty/kitty.conf
+  brew services restart yabai
 fi

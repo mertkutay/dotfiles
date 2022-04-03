@@ -25,11 +25,6 @@ yabai -m config window_opacity               off
 yabai -m config window_opacity_duration      0.0
 yabai -m config active_window_opacity        1.0
 yabai -m config normal_window_opacity        0.90
-yabai -m config window_border                off
-yabai -m config window_border_width          6
-yabai -m config active_window_border_color   0xff775759
-yabai -m config normal_window_border_color   0xff555555
-yabai -m config insert_feedback_color        0xffd75f5f
 yabai -m config split_ratio                  0.50
 yabai -m config auto_balance                 off
 yabai -m config mouse_modifier               ctrl
@@ -57,6 +52,7 @@ yabai -m rule --add app="^System Information$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Activity Monitor$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Spotify$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Logi Options" sticky=on layer=above manage=off
+yabai -m rule --add app="^Authy Desktop$" sticky=on layer=above manage=off
 
 yabai -m signal --add event=window_destroyed action="./$HOME/bin/focus-on-window-destroy"
 
@@ -65,8 +61,8 @@ source ~/.cache/wal/colors.sh # pywal scheme - update if needed
 # yabai template colours
 CBACK=$(echo $background | sed 's/#//')
 CFORE=$(echo $foreground | sed 's/#//')
-CACTV=$(echo $color3 | sed 's/#//')
-CNORM=$(echo $color1 | sed 's/#//')
+CACTV=$(echo $color5 | sed 's/#//')
+CNORM=$(echo $color3 | sed 's/#//')
 CINSE=$(echo $foreground | sed 's/#//')
 
 yabai -m config status_bar                   on

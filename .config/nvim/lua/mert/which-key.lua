@@ -11,7 +11,7 @@ local mappings = {
 	b = { "<cmd>Telescope buffers<cr>", "Buffers" },
 	c = { "<cmd>Bdelete<CR>", "Close Buffer" },
 	e = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
-	f = { "<cmd>Telescope find_files hidden=true<cr>", "Find files" },
+	f = { "<cmd>Telescope find_files hidden=true<cr>", "Find Files" },
 	F = { "<cmd>Telescope live_grep<cr>", "Find Text" },
 	g = {
 		name = "Git",
@@ -37,7 +37,7 @@ local mappings = {
 		r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
 		R = { "<cmd>Telescope registers<cr>", "Registers" },
 		k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-		t = { "<cmd>Telescope colorscheme<cr>", "Theme" },
+		t = { "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>", "Theme" },
 	},
 	l = {
 		name = "LSP",

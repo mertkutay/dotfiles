@@ -43,10 +43,9 @@ set -x PROJECT_HOME $HOME/projects
 set -x COMPOSE_DOCKER_CLI_BUILD 1
 set -x DOCKER_BUILDKIT 1
 
-pyenv init --path | source
 
 function t
-  if test -z "$TMUX" -a -z "$SSH_CLIENT" -a -z "$SSH_TTY"
+  if [ "$TERM_PROGRAM" != "vscode" ]; and test -z "$TMUX" -a -z "$SSH_CLIENT" -a -z "$SSH_TTY"
     set session_name "default"
     tmux has-session -t=$session_name 2> /dev/null
     if test $status -eq 1
@@ -57,6 +56,16 @@ function t
   end
 end
 
+function current_branch
+  set ref (git symbolic-ref HEAD 2> /dev/null); or \
+  set ref (git rev-parse --short HEAD 2> /dev/null); or return
+  echo $ref | sed s-refs/heads/--
+end
+
+if status is-login
+  pyenv init --path | source
+end
+
 if status is-interactive
   fish_vi_key_bindings
 
@@ -65,6 +74,21 @@ if status is-interactive
   alias ta="tmux attach"
   alias tl="tmux ls"
   alias vim="nvim"
+
+  alias gst="git status"
+  alias gd="git diff"
+  alias gl="git pull"
+  alias gp="git push"
+  alias gcmsg="git commit -m"
+  alias gco="git checkout"
+  alias gb="git branch"
+  alias gcp="git cherry-pick"
+  alias glo="git log --oneline"
+  alias ga="git add"
+  alias gm="git merge"
+  alias gr="git reset"
+  alias ggl='git pull origin (current_branch)'
+  alias ggp='git push origin (current_branch)'
 
   pyenv init - | source
   direnv hook fish | source

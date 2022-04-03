@@ -3,8 +3,8 @@ local modules = {
 	"keymaps",
 	"plugins",
 	"impatient",
+	"notify",
 	"colorscheme",
-	"transparent",
 	"cmp",
 	"lsp",
 	"telescope",
@@ -22,6 +22,7 @@ local modules = {
 	"which-key",
 	"colorizer",
 	"autocommands",
+	"multi-cursor",
 }
 
 for _, module in ipairs(modules) do
