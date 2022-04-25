@@ -86,8 +86,12 @@ return packer.startup(function(use)
 	use("nvim-lua/lsp-status.nvim")
 
 	use("akinsho/toggleterm.nvim")
+
 	use("jamessan/vim-gnupg")
 	use("dag/vim-fish")
+	use("amadeus/vim-mjml")
+	use("chrisbra/csv.vim")
+
 	if packer_bootstrap then
 		require("packer").sync()
 	end

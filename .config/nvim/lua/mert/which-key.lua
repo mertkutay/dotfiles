@@ -68,7 +68,8 @@ local mappings = {
 		u = { "<cmd>PackerUpdate<cr>", "Update" },
 	},
 	P = { "<cmd>Telescope projects<cr>", "Projects" },
-	q = { "<cmd>q!<CR>", "Quit" },
+	q = { "<cmd>q<CR>", "Quit" },
+	r = { "<cmd>NvimTreeRefresh<cr>", "Refresh Explorer" },
 	t = {
 		name = "Terminal",
 		f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },

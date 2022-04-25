@@ -27,6 +27,7 @@ local function setup_document_highlighting(client)
       autocmd! * <buffer>
       autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
       autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      autocmd CursorHold * silent! lua require('lsp-status').update_current_function()
     augroup END
     ]])
 	end

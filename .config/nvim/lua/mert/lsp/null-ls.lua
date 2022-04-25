@@ -13,6 +13,10 @@ null_ls.setup({
 		diagnostics.eslint,
 
 		formatting.stylua,
+
+		formatting.clang_format,
+
+		formatting.google_java_format,
 	},
 	on_attach = function(client)
 		if client.resolved_capabilities.document_formatting then

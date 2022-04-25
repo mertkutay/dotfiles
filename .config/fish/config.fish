@@ -81,14 +81,18 @@ if status is-interactive
   alias gp="git push"
   alias gcmsg="git commit -m"
   alias gco="git checkout"
+  alias gcb="git checkout -b"
   alias gb="git branch"
   alias gcp="git cherry-pick"
   alias glo="git log --oneline"
+  alias gsh="git show"
   alias ga="git add"
   alias gm="git merge"
   alias gr="git reset"
   alias ggl='git pull origin (current_branch)'
   alias ggp='git push origin (current_branch)'
+  alias gpf="git push --force-with-lease"
+  alias ggsup="git branch --set-upstream-to=origin/(current_branch)"
 
   pyenv init - | source
   direnv hook fish | source

@@ -2,13 +2,6 @@ local spaces = function()
 	return "S: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
 end
 
-vim.cmd([[
-  augroup _update_function
-    autocmd!
-    autocmd CursorHold * silent! lua require('lsp-status').update_current_function()
-  augroup END
-]])
-
 local currentFunction = function()
 	local filename = vim.fn.expand("%:t:r")
 
