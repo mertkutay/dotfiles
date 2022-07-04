@@ -72,6 +72,7 @@ return packer.startup(function(use)
 	use("windwp/nvim-autopairs")
 	use("lukas-reineke/indent-blankline.nvim")
 	use("lewis6991/gitsigns.nvim")
+	use("f-person/git-blame.nvim")
 	use("norcalli/nvim-colorizer.lua")
 
 	use("numToStr/Comment.nvim")
@@ -88,7 +89,6 @@ return packer.startup(function(use)
 	use("akinsho/toggleterm.nvim")
 
 	use("jamessan/vim-gnupg")
-	use("dag/vim-fish")
 	use("amadeus/vim-mjml")
 	use("chrisbra/csv.vim")
 

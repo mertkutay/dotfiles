@@ -69,6 +69,10 @@ end
 if status is-interactive
   fish_vi_key_bindings
 
+  set -x LG_CONFIG_FILE "$HOME/.config/lazygit/config.yml"
+
+  alias ssh="TERM=xterm-256color command ssh -A"
+
   alias python="python3"
   alias pip="pip3"
   alias ta="tmux attach"
@@ -89,9 +93,10 @@ if status is-interactive
   alias ga="git add"
   alias gm="git merge"
   alias gr="git reset"
-  alias ggl='git pull origin (current_branch)'
-  alias ggp='git push origin (current_branch)'
+  alias ggl="git pull origin (current_branch)"
+  alias ggp="git push origin (current_branch)"
   alias gpf="git push --force-with-lease"
+  alias gsu="git submodule update"
   alias ggsup="git branch --set-upstream-to=origin/(current_branch)"
 
   pyenv init - | source

@@ -97,6 +97,10 @@ case $1 in
     docker-compose run --publish 8888:8888 --rm django python manage.py shell_plus --lab
     ;;
 
+  purge-celery)
+    docker-compose run --rm celery celery purge
+    ;;
+
   rmdb)
     docker-compose run --rm django python manage.py reset_db -D $2
     ;;

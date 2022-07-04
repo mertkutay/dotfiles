@@ -7,3 +7,7 @@
 	defaultBranch = master
 [github]
 	user = mertkutay
+[core]
+  pager = delta
+[interactive]
+  diffFilter = delta --color-only
