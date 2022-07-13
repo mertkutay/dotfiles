@@ -1,33 +1,3 @@
-local global_options = {
-	git_hl = 1,
-	root_folder_modifier = ":t",
-	respect_buf_cwd = 1,
-	show_icons = {
-		git = 1,
-		folders = 1,
-		files = 1,
-		folder_arrows = 1,
-		tree_width = 30,
-	},
-	icons = {
-		default = "",
-		symlink = "",
-		git = {
-			unstaged = "",
-			staged = "S",
-			unmerged = "",
-			renamed = "➜",
-			untracked = "U",
-			deleted = "",
-			ignored = "◌",
-		},
-	},
-}
-
-for k, v in pairs(global_options) do
-	vim.g["nvim_tree_" .. k] = v
-end
-
 local tree_cb = require("nvim-tree.config").nvim_tree_callback
 
 vim.cmd("autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif")
@@ -35,7 +5,9 @@ vim.cmd("autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTre
 require("nvim-tree").setup({
 	disable_netrw = true,
 	update_cwd = true,
+	respect_buf_cwd = true,
 	view = {
+		width = 30,
 		mappings = {
 			list = {
 				{ key = { "l", "<CR>", "o", "<2-LeftMouse>" }, cb = tree_cb("edit") },
@@ -51,5 +23,30 @@ require("nvim-tree").setup({
 	},
 	diagnostics = {
 		enable = true,
+	},
+	renderer = {
+		highlight_git = true,
+		root_folder_modifier = ":t",
+		icons = {
+			glyphs = {
+				default = "",
+				symlink = "",
+				git = {
+					unstaged = "",
+					staged = "S",
+					unmerged = "",
+					renamed = "➜",
+					untracked = "U",
+					deleted = "",
+					ignored = "◌",
+				},
+			},
+			show = {
+				git = true,
+				folder = true,
+				file = true,
+				folder_arrow = true,
+			},
+		},
 	},
 })
