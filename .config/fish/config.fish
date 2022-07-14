@@ -18,7 +18,7 @@ pathadd "/usr/local/go/bin"
 
 set brew_prefix /opt/homebrew
 if test -d $brew_prefix
-  eval "$($brew_prefix/bin/brew shellenv)"
+  eval ($brew_prefix/bin/brew shellenv)
   pathadd "$brew_prefix/bin"
   pathadd "$brew_prefix/opt/coreutils/libexec/gnubin"
   pathadd "$brew_prefix/opt/libpq/bin"
@@ -31,6 +31,13 @@ if test -d "$brew_prefix/opt/openssl"
   set -x CFLAGS "$CFLAGS -I$brew_prefix/opt/openssl/include"
   set -x LDFLAGS "$LDFLAGS -L$brew_prefix/opt/openssl/lib"
 end
+
+set PYENV_ROOT $HOME/.pyenv
+if test -d $PYENV_ROOT
+  pathadd "$PYENV_ROOT/bin"
+end
+
+set --universal nvm_default_version v16.16.0
 
 set -x LANG en_US.UTF-8
 set -x LC_ALL en_US.UTF-8
@@ -101,6 +108,7 @@ if status is-interactive
 
   pyenv init - | source
   direnv hook fish | source
+  starship init fish | source
 
   t
 end

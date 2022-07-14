@@ -27,7 +27,7 @@ local function setup_lsp_keymaps(bufnr)
 end
 
 local function setup_document_highlighting(client)
-	if client.resolved_capabilities.document_highlight then
+	if client.server_capabilities.documentHighlightProvider then
 		vim.cmd([[
     augroup LspDocumentHighlight
       autocmd! * <buffer>
@@ -47,8 +47,8 @@ capabilities = vim.tbl_extend("keep", capabilities, lsp_status.capabilities)
 
 local opts = {
 	on_attach = function(client, bufnr)
-		client.resolved_capabilities.document_formatting = false
-		client.resolved_capabilities.document_range_formatting = false
+		client.server_capabilities.documentFormattingProvider = false
+		client.server_capabilities.documentRangeFormattingProvider = false
 		setup_lsp_keymaps(bufnr)
 		setup_document_highlighting(client)
 		lsp_status.on_attach(client)
