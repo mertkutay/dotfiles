@@ -11,31 +11,22 @@ brew install \
     coreutils stow \
     pyenv go rust \
     htop gotop lazygit spotify-tui \
-    wget tmux direnv \
-    gnupg pass browserpass pinentry-mac \
-    neovim alacritty bluesnooze \
-    ripgrep fd fzf \
+    wget tmux direnv gnupg  \
+    neovim iterm2 bluesnooze \
+    ripgrep fd fzf stylua \
     libpq openssl ffmpeg \
-    jq pidof imagemagick neofetch fortune \
-    koekeishiya/formulae/yabai koekeishiya/formulae/skhd
+    jq pidof imagemagick neofetch fortune
 
 set -Ux PYENV_ROOT $HOME/.pyenv
 set -U fish_user_paths $PYENV_ROOT/bin $fish_user_paths
-pyenv install 3.9.11
-pyenv global 3.9.11
-pip install flake8 black isort ipython pywal
+pyenv install 3.10.5
+pyenv global 3.10.5
+pip install flake8 black isort ipython
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
 
-curl -sL https://git.io/fisher | source
-fisher install jorgebucaran/fisher
-fisher install IlanCosman/tide
+curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
 
 fisher install jorgebucaran/nvm.fish
-nvm install 16
+nvm install 16.16.0
 npm install -g yarn
 yarn global add prettier eslint
-
-cargo install stylua
-
-brew services start yabai
-brew services start skhd
