@@ -1,3 +1,15 @@
+if ($PSVersionTable.PSVersion.Major -le 5) {
+	function Remove-Alias ([string] $AliasName) {
+		while (Test-Path Alias:$AliasName) {
+			Remove-Item Alias:$AliasName -Force 2> $null
+		}
+	}
+}
+
+Remove-Alias gcb -Force -ErrorAction SilentlyContinue
+Remove-Alias gl -Force -ErrorAction SilentlyContinue
+Remove-Alias gm -Force -ErrorAction SilentlyContinue
+Remove-Alias gp -Force -ErrorAction SilentlyContinue
 
 function Get-Git-CurrentBranch {
 	git symbolic-ref --quiet HEAD *> $null
@@ -68,6 +80,10 @@ function ggp {
 	$CurrentBranch = Get-Git-CurrentBranch
 
 	git push origin $CurrentBranch
+}
+
+function lg {
+	lazygit
 }
 
 Invoke-Expression (&starship init powershell)

@@ -50,6 +50,7 @@ set -x PROJECT_HOME $HOME/projects
 set -x COMPOSE_DOCKER_CLI_BUILD 1
 set -x DOCKER_BUILDKIT 1
 
+set -x BAT_THEME "OneHalfDark"
 
 function t
   if [ "$TERM_PROGRAM" != "vscode" ]; and test -z "$TMUX" -a -z "$SSH_CLIENT" -a -z "$SSH_TTY"
@@ -85,6 +86,7 @@ if status is-interactive
   alias ta="tmux attach"
   alias tl="tmux ls"
   alias vim="nvim"
+  alias lg="lazygit"
 
   alias gst="git status"
   alias gd="git diff"
