@@ -43,10 +43,12 @@ curl -OL https://go.dev/dl/go1.18.4.linux-amd64.tar.gz
 sudo tar -C /usr/local -xvf go1.18.4.linux-amd64.tar.gz
 rm go1.18.4.linux-amd64.tar.gz
 
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+export PATH="$PATH:/usr/local/go/bin:$HOME/.cargo/bin"
+
 go install github.com/jesseduffield/lazygit@latest
 go install github.com/xxxserxxx/gotop/v4/cmd/gotop@v4.1.2
-
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 cargo install starship \
     git-delta \
@@ -56,7 +58,7 @@ cargo install starship \
     stylua
 
 chsh -s /usr/bin/fish
-su - ${USER}
 
-curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
-fisher install jorgebucaran/nvm.fish
+fish -c "curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher jorgebucaran/nvm.fish && nvm install 16.16.0"
+
+su - ${USER}
