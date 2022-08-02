@@ -36,6 +36,11 @@ LOCAL_BIN=$HOME/.local/bin
 mkdir -p $LOCAL_BIN
 export PATH="$PATH:$LOCAL_BIN"
 
+curl -sLo/tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
+unzip -p /tmp/win32yank.zip win32yank.exe > /tmp/win32yank.exe
+chmod +x /tmp/win32yank.exe
+sudo mv /tmp/win32yank.exe /usr/local/bin/
+
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 
