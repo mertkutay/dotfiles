@@ -38,7 +38,7 @@ return packer.startup(function(use)
 	use("nvim-lua/plenary.nvim")
 	use("nvim-lua/popup.nvim")
 
-	use("navarasu/onedark.nvim")
+	use("ellisonleao/gruvbox.nvim")
 
 	use("hrsh7th/nvim-cmp")
 	use("hrsh7th/cmp-buffer")

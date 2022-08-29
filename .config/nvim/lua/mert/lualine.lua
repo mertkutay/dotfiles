@@ -18,7 +18,7 @@ end
 
 require("lualine").setup({
 	options = {
-		theme = "onedark",
+		theme = "auto",
 		disabled_filetypes = { "alpha", "NvimTree" },
 	},
 	sections = {
