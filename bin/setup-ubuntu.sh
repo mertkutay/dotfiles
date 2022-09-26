@@ -36,17 +36,20 @@ LOCAL_BIN=$HOME/.local/bin
 mkdir -p $LOCAL_BIN
 export PATH="$PATH:$LOCAL_BIN"
 
-curl -sLo/tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
-unzip -p /tmp/win32yank.zip win32yank.exe > /tmp/win32yank.exe
-chmod +x /tmp/win32yank.exe
-sudo mv /tmp/win32yank.exe /usr/local/bin/
+if grep -qi microsoft /proc/version; then
+  curl -sLo/tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
+  unzip -p /tmp/win32yank.zip win32yank.exe > /tmp/win32yank.exe
+  chmod +x /tmp/win32yank.exe
+  sudo mv /tmp/win32yank.exe /usr/local/bin/
+fi
 
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 
-curl -OL https://go.dev/dl/go1.18.4.linux-amd64.tar.gz
-sudo tar -C /usr/local -xvf go1.18.4.linux-amd64.tar.gz
-rm go1.18.4.linux-amd64.tar.gz
+arch=$(dpkg --print-architecture)
+curl -OL https://go.dev/dl/go1.18.4.linux-$arch.tar.gz
+sudo tar -C /usr/local -xvf go1.18.4.linux-$arch.tar.gz
+rm go1.18.4.linux-$arch.tar.gz
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
@@ -62,8 +65,10 @@ cargo install starship \
     bat \
     stylua
 
-chsh -s /usr/bin/fish
+sudo chsh -s /usr/bin/fish $(whoami)
 
 fish -c "curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher jorgebucaran/nvm.fish && nvm install 16.16.0"
+
+curl -sS https://starship.rs/install.sh | sudo sh
 
 su - ${USER}

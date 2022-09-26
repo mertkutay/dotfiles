@@ -26,16 +26,25 @@ local function setup_lsp_keymaps(bufnr)
 	nmap(bufnr, "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
 end
 
-local function setup_document_highlighting(client)
+local function setup_document_highlighting(client, bufnr)
 	if client.server_capabilities.documentHighlightProvider then
-		vim.cmd([[
-    augroup LspDocumentHighlight
-      autocmd! * <buffer>
-      autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-      autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      autocmd CursorHold * silent! lua require('lsp-status').update_current_function()
-    augroup END
-    ]])
+		vim.api.nvim_create_augroup("lsp_document_highlight", {
+			clear = false,
+		})
+		vim.api.nvim_clear_autocmds({
+			group = "lsp_document_highlight",
+			buffer = bufnr,
+		})
+		vim.api.nvim_create_autocmd("CursorHold", {
+			group = "lsp_document_highlight",
+			buffer = bufnr,
+			callback = vim.lsp.buf.document_highlight,
+		})
+		vim.api.nvim_create_autocmd("CursorMoved", {
+			group = "lsp_document_highlight",
+			buffer = bufnr,
+			callback = vim.lsp.buf.clear_references,
+		})
 	end
 end
 
@@ -50,7 +59,7 @@ local opts = {
 		client.server_capabilities.documentFormattingProvider = false
 		client.server_capabilities.documentRangeFormattingProvider = false
 		setup_lsp_keymaps(bufnr)
-		setup_document_highlighting(client)
+		setup_document_highlighting(client, bufnr)
 		lsp_status.on_attach(client)
 		lsp_signature.on_attach()
 	end,
