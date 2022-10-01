@@ -52,6 +52,11 @@ set -x DOCKER_BUILDKIT 1
 
 set -x BAT_THEME "OneHalfDark"
 
+set -x COPPELIASIM_ROOT $HOME/coppelia
+
+set -x LD_LIBRARY_PATH $COPPELIASIM_ROOT:$LD_LIBRARY_PATH
+set -x QT_QPA_PLATFORM_PLUGIN_PATH $COPPELIASIM_ROOT
+
 function t
   if [ "$TERM_PROGRAM" != "vscode" ]; and test -z "$TMUX" -a -z "$SSH_CLIENT" -a -z "$SSH_TTY"
     set session_name "default"

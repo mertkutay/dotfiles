@@ -32,6 +32,17 @@ sudo apt install -o Dpkg::Options::="--force-overwrite" \
     swig \
     tree -y
 
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+
 LOCAL_BIN=$HOME/.local/bin
 mkdir -p $LOCAL_BIN
 export PATH="$PATH:$LOCAL_BIN"
@@ -43,7 +54,7 @@ if grep -qi microsoft /proc/version; then
   sudo mv /tmp/win32yank.exe /usr/local/bin/
 fi
 
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
+curl -sSL https://install.python-poetry.org | python3 -
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 
 arch=$(dpkg --print-architecture)
