@@ -19,6 +19,14 @@ sudo apt install -o Dpkg::Options::="--force-overwrite" \
     autoconf \
     cmake \
     libpq-dev \
+    libncurses-dev \
+    libsqlite3-dev \
+    libreadline-dev \
+    libbz2-dev \
+    libffi-dev \
+    libssl-dev \
+    liblzma-dev \
+    libgtk-3-dev \
     python3-pip \
     nodejs \
     default-jre \
@@ -39,7 +47,6 @@ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
-sudo groupadd docker
 sudo usermod -aG docker $USER
 newgrp docker
 
@@ -79,7 +86,5 @@ cargo install starship \
 sudo chsh -s /usr/bin/fish $(whoami)
 
 fish -c "curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher jorgebucaran/nvm.fish && nvm install 16.16.0"
-
-curl -sS https://starship.rs/install.sh | sudo sh
 
 su - ${USER}

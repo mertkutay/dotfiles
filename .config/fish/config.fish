@@ -50,7 +50,7 @@ set -x PROJECT_HOME $HOME/projects
 set -x COMPOSE_DOCKER_CLI_BUILD 1
 set -x DOCKER_BUILDKIT 1
 
-set -x BAT_THEME "OneHalfDark"
+set -x BAT_THEME "gruvbox-dark"
 
 set -x COPPELIASIM_ROOT $HOME/coppelia
 
@@ -84,7 +84,7 @@ if status is-interactive
 
   set -x LG_CONFIG_FILE "$HOME/.config/lazygit/config.yml"
 
-  alias ssh="TERM=xterm-256color command ssh -A"
+  set -x TERM xterm-256color
 
   alias python="python3"
   alias pip="pip3"
