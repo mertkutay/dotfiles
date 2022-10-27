@@ -18,18 +18,24 @@ pathadd "/usr/local/go/bin"
 
 set brew_prefix /opt/homebrew
 if test -d $brew_prefix
+  function flagadd
+    set lib_dir "$brew_prefix$argv[1]"
+    if test -d lib_dir
+      set -x CFLAGS "$CFLAGS -I$lib_dir/include"
+      set -x LDFLAGS "$LDFLAGS -L$lib_dir/lib"
+    end
+  end
+
   eval ($brew_prefix/bin/brew shellenv)
   pathadd "$brew_prefix/bin"
   pathadd "$brew_prefix/opt/coreutils/libexec/gnubin"
+  pathadd "$brew_prefix/opt/llvm@10/bin"
   pathadd "$brew_prefix/opt/libpq/bin"
-  pathadd "$brew_prefix/opt/llvm@11/bin"
-  set -x CFLAGS "-I$brew_prefix/include"
-  set -x LDFLAGS "-L$brew_prefix/lib"
-end
-
-if test -d "$brew_prefix/opt/openssl"
-  set -x CFLAGS "$CFLAGS -I$brew_prefix/opt/openssl/include"
-  set -x LDFLAGS "$LDFLAGS -L$brew_prefix/opt/openssl/lib"
+  flagadd ""
+  flagadd "/opt/openssl"
+  flagadd "/opt/libffi"
+  flagadd "/opt/llvm@10"
+  flagadd "/opt/libpq"
 end
 
 set PYENV_ROOT $HOME/.pyenv
@@ -52,8 +58,9 @@ set -x DOCKER_BUILDKIT 1
 
 set -x BAT_THEME "gruvbox-dark"
 
-set -x COPPELIASIM_ROOT $HOME/coppelia
+set -x LLVM_CONFIG (which llvm-config)
 
+set -x COPPELIASIM_ROOT $HOME/coppelia
 set -x LD_LIBRARY_PATH $COPPELIASIM_ROOT:$LD_LIBRARY_PATH
 set -x QT_QPA_PLATFORM_PLUGIN_PATH $COPPELIASIM_ROOT
 
@@ -81,6 +88,8 @@ end
 
 if status is-interactive
   fish_vi_key_bindings
+
+  set -x TERM xterm-256color
 
   set -x LG_CONFIG_FILE "$HOME/.config/lazygit/config.yml"
 
