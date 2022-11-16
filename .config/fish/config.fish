@@ -1,46 +1,56 @@
-function pathadd
+function add_path
   if test -d $argv[1]
     set -x PATH $argv[1] $PATH
   end
 end
 
-pathadd "/usr/local/bin"
-pathadd "/usr/local/sbin"
-pathadd "$HOME/bin"
-pathadd "$HOME/.local/bin"
-pathadd "$HOME/.fzf/bin"
-pathadd "$HOME/.emacs.d/bin"
-pathadd "$HOME/.poetry/bin"
-pathadd "$HOME/.yarn/bin"
-pathadd "$HOME/.cargo/bin"
-pathadd "$HOME/go/bin"
-pathadd "/usr/local/go/bin"
+function add_flags
+  if test -d $argv[1]
+    set -x CFLAGS "-I$argv[1]/include" $CFLAGS
+    set -x LDFLAGS "-L$argv[1]/lib" $LDFLAGS
+  end
+end
+
+function add_ld_library
+  if test -d $argv[1]
+    set -x LD_LIBRARY_PATH $argv[1] $LD_LIBRARY_PATH
+  end
+end
+
+add_path "/usr/local/bin"
+add_path "/usr/local/sbin"
+add_path "$HOME/bin"
+add_path "$HOME/.local/bin"
+add_path "$HOME/.fzf/bin"
+add_path "$HOME/.emacs.d/bin"
+add_path "$HOME/.poetry/bin"
+add_path "$HOME/.yarn/bin"
+add_path "$HOME/.cargo/bin"
+add_path "$HOME/go/bin"
+add_path "/usr/local/go/bin"
 
 set brew_prefix /opt/homebrew
+set -x CFLAGS ""
+set -x LDFLAGS ""
 if test -d $brew_prefix
-  function flagadd
-    set lib_dir "$brew_prefix$argv[1]"
-    if test -d lib_dir
-      set -x CFLAGS "$CFLAGS -I$lib_dir/include"
-      set -x LDFLAGS "$LDFLAGS -L$lib_dir/lib"
-    end
-  end
-
   eval ($brew_prefix/bin/brew shellenv)
-  pathadd "$brew_prefix/bin"
-  pathadd "$brew_prefix/opt/coreutils/libexec/gnubin"
-  pathadd "$brew_prefix/opt/llvm@10/bin"
-  pathadd "$brew_prefix/opt/libpq/bin"
-  flagadd ""
-  flagadd "/opt/openssl"
-  flagadd "/opt/libffi"
-  flagadd "/opt/llvm@10"
-  flagadd "/opt/libpq"
+  add_path "$brew_prefix/bin"
+  add_path "$brew_prefix/opt/coreutils/libexec/gnubin"
+  add_path "$brew_prefix/opt/llvm@10/bin"
+  add_path "$brew_prefix/opt/llvm/bin"
+  add_path "$brew_prefix/opt/libpq/bin"
+
+  add_flags "$brew_prefix"
+  add_flags "$brew_prefix/opt/openssl"
+  add_flags "$brew_prefix/opt/libffi"
+  add_flags "$brew_prefix/opt/llvm@10"
+  add_flags "$brew_prefix/opt/llvm"
+  add_flags "$brew_prefix/opt/libpq"
 end
 
 set PYENV_ROOT $HOME/.pyenv
 if test -d $PYENV_ROOT
-  pathadd "$PYENV_ROOT/bin"
+  add_path "$PYENV_ROOT/bin"
 end
 
 set --universal nvm_default_version v16.16.0
@@ -61,8 +71,10 @@ set -x BAT_THEME "gruvbox-dark"
 set -x LLVM_CONFIG (which llvm-config)
 
 set -x COPPELIASIM_ROOT $HOME/coppelia
-set -x LD_LIBRARY_PATH $COPPELIASIM_ROOT:$LD_LIBRARY_PATH
 set -x QT_QPA_PLATFORM_PLUGIN_PATH $COPPELIASIM_ROOT
+add_ld_library $COPPELIASIM_ROOT
+add_ld_library $HOME/.mujoco/mujoco210/bin
+add_ld_library /usr/lib/nvidia
 
 function t
   if [ "$TERM_PROGRAM" != "vscode" ]; and test -z "$TMUX" -a -z "$SSH_CLIENT" -a -z "$SSH_TTY"

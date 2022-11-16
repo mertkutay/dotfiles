@@ -7,6 +7,8 @@ return {
     python = {
       analysis = {
         typeCheckingMode = "basic",
+        reportPrivateUsage = false,
+        reportPrivateImportUsage = false,
       },
     },
   },
