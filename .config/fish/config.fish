@@ -1,3 +1,7 @@
+set -x CFLAGS ""
+set -x LDFLAGS ""
+set -x LD_LIBRARY_PATH ""
+
 function add_path
   if test -d $argv[1]
     set -x PATH $argv[1] $PATH
@@ -6,14 +10,14 @@ end
 
 function add_flags
   if test -d $argv[1]
-    set -x CFLAGS "-I$argv[1]/include" $CFLAGS
-    set -x LDFLAGS "-L$argv[1]/lib" $LDFLAGS
+    set -x CFLAGS "-I$argv[1]/include $CFLAGS"
+    set -x LDFLAGS "-L$argv[1]/lib $LDFLAGS"
   end
 end
 
 function add_ld_library
   if test -d $argv[1]
-    set -x LD_LIBRARY_PATH $argv[1] $LD_LIBRARY_PATH
+    set -x LD_LIBRARY_PATH "$argv[1]:$LD_LIBRARY_PATH"
   end
 end
 
@@ -30,8 +34,6 @@ add_path "$HOME/go/bin"
 add_path "/usr/local/go/bin"
 
 set brew_prefix /opt/homebrew
-set -x CFLAGS ""
-set -x LDFLAGS ""
 if test -d $brew_prefix
   eval ($brew_prefix/bin/brew shellenv)
   add_path "$brew_prefix/bin"
@@ -71,6 +73,7 @@ set -x BAT_THEME "gruvbox-dark"
 set -x LLVM_CONFIG (which llvm-config)
 
 set -x COPPELIASIM_ROOT $HOME/coppelia
+set -x QT_PLUGIN_PATH $COPPELIASIM_ROOT
 set -x QT_QPA_PLATFORM_PLUGIN_PATH $COPPELIASIM_ROOT
 add_ld_library $COPPELIASIM_ROOT
 add_ld_library $HOME/.mujoco/mujoco210/bin
@@ -134,7 +137,6 @@ if status is-interactive
   alias gsu="git submodule update"
   alias ggsup="git branch --set-upstream-to=origin/(current_branch)"
 
-  pyenv init - | source
   direnv hook fish | source
   starship init fish | source
 

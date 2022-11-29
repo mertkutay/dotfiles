@@ -1,11 +1,11 @@
 require("toggleterm").setup({
   size = 20,
   open_mapping = [[<c-\>]],
-  shading_factor = 2,
+  shade_terminals = false,
   direction = "float",
   float_opts = {
     border = "curved",
-    winblend = 2,
+    winblend = 0,
   },
 })
 
