@@ -126,7 +126,7 @@ if status is-interactive
   alias gcb="git checkout -b"
   alias gb="git branch"
   alias gcp="git cherry-pick"
-  alias glo="git log --oneline"
+  alias glo="git log --graph --branches --format=format:'%C(auto)%h%C(reset) %C(blue)(%cr)%C(reset) %C(auto)%s%C(reset) %C(dim normal)<%an>%C(reset)%C(auto)%d%C(reset)'"
   alias gsh="git show"
   alias ga="git add"
   alias gm="git merge"
