@@ -8,7 +8,7 @@ null_ls.setup({
   sources = {
     formatting.black,
     formatting.isort,
-    diagnostics.flake8,
+    diagnostics.ruff,
 
     formatting.prettier,
     diagnostics.eslint,

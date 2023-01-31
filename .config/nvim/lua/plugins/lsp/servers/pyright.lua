@@ -3,9 +3,15 @@ local lsp_util = require("lspconfig/util")
 local utils = require("utils")
 
 return {
+  flags = {
+    debounce_text_changes = 300,
+  },
   settings = {
     python = {
       analysis = {
+        autoSearchPaths = true,
+        diagnosticMode = "openFilesOnly",
+        useLibraryCodeForTypes = true,
         typeCheckingMode = "basic",
         reportPrivateUsage = false,
         reportPrivateImportUsage = false,
