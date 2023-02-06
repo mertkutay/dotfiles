@@ -7,4 +7,7 @@ notify.setup({
 
 vim.notify = notify
 
-require("telescope").load_extension("notify")
+local ok, telescope = pcall(require, "telescope")
+if ok then
+  telescope.load_extension("notify")
+end

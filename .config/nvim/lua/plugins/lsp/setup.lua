@@ -32,12 +32,6 @@ vim.lsp.handlers["textDocument/signatureHelp"] =
     border = "rounded",
   })
 
-local lsp_status = require("lsp-status")
-local lsp_signature = require("lsp_signature")
-
-lsp_status.register_progress()
-lsp_signature.setup()
-
 local function setup_document_highlighting(client, bufnr)
   if client.server_capabilities.documentHighlightProvider then
     local augroup = vim.api.nvim_create_augroup("lsp_document_highlight", {
@@ -62,16 +56,19 @@ end
 
 local lspconfig = require("lspconfig")
 
+local lsp_signature = require("lsp_signature")
+local navic = require("nvim-navic")
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-capabilities = vim.tbl_extend("keep", capabilities, lsp_status.capabilities)
 
 local opts = {
   on_attach = function(client, bufnr)
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
     setup_document_highlighting(client, bufnr)
-    lsp_status.on_attach(client)
     lsp_signature.on_attach()
+    if client.server_capabilities.documentSymbolProvider then
+      navic.attach(client, bufnr)
+    end
   end,
   capabilities = capabilities,
 }

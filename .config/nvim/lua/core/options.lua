@@ -40,6 +40,9 @@ local options = {
   foldlevel = 99,
   foldmethod = "expr",
   foldexpr = "nvim_treesitter#foldexpr()",
+  winwidth = 10,
+  winminwidth = 10,
+  equalalways = false,
 }
 
 for k, v in pairs(options) do
