@@ -73,12 +73,12 @@ local opts = {
   capabilities = capabilities,
 }
 
-for _, server in ipairs({ "jsonls", "pyright", "sumneko_lua" }) do
+for _, server in ipairs({ "jsonls", "pyright", "lua_ls" }) do
   lspconfig[server].setup(
     vim.tbl_deep_extend("force", require("plugins.lsp.servers." .. server), opts)
   )
 end
 
-for _, server in ipairs({ "tsserver", "yamlls", "jdtls", "volar" }) do
+for _, server in ipairs({ "tsserver", "yamlls", "jdtls", "volar", "taplo" }) do
   lspconfig[server].setup(opts)
 end

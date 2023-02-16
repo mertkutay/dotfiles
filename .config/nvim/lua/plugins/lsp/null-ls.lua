@@ -14,10 +14,9 @@ null_ls.setup({
     diagnostics.eslint,
 
     formatting.stylua,
-
     formatting.clang_format,
-
     formatting.google_java_format,
+    formatting.taplo,
   },
   on_attach = function(client, bufnr)
     if client.supports_method("textDocument/formatting") then

@@ -5,8 +5,9 @@ require("mason-lspconfig").setup({
     "jsonls",
     "tsserver",
     "yamlls",
-    "sumneko_lua",
+    "lua_ls",
     "jdtls",
     "volar",
+    "taplo",
   },
 })

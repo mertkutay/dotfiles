@@ -5,6 +5,7 @@ telescope.setup({
   defaults = {
     prompt_prefix = " ",
     selection_caret = " ",
+    borderchars = { "█", " ", "▀", "█", "█", " ", " ", "▀" },
     mappings = {
       i = {
         ["<C-n>"] = actions.cycle_history_next,

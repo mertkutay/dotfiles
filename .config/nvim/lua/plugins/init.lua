@@ -33,11 +33,12 @@ require("lazy").setup({
     end,
   },
   {
-    "sainnhe/gruvbox-material",
-    lazy = false,
-    priority = 1000,
+    "loctvl842/monokai-pro.nvim",
     config = function()
-      require("plugins.gruvbox")
+      require("monokai-pro").setup({
+        background_clear = {},
+      })
+      vim.cmd([[colorscheme monokai-pro]])
     end,
   },
   {
