@@ -94,11 +94,10 @@ local leaderMappings = {
     S = { ":Telescope lsp_dynamic_workspace_symbols<CR>", "Workspace Symbols" },
   },
   p = {
-    c = { ":PackerCompile<CR>", "Compile" },
-    i = { ":PackerInstall<CR>", "Install" },
-    s = { ":PackerSync<CR>", "Sync" },
-    S = { ":PackerStatus<CR>", "Status" },
-    u = { ":PackerUpdate<CR>", "Update" },
+    h = { ":Lazy health<CR>", "Health" },
+    i = { ":Lazy install<CR>", "Install" },
+    s = { ":Lazy sync<CR>", "Sync" },
+    u = { ":Lazy update<CR>", "Update" },
   },
   t = {
     f = { ":ToggleTerm direction=float<CR>", "Float" },

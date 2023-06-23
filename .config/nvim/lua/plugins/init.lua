@@ -99,9 +99,15 @@ require("lazy").setup({
       require("plugins.gitsigns")
     end,
   },
-  "f-person/git-blame.nvim",
+  {
+    "f-person/git-blame.nvim",
+    config = function()
+      require("plugins.git-blame")
+    end,
+  },
   { "NvChad/nvim-colorizer.lua", config = true },
   "p00f/nvim-ts-rainbow",
+  "RRethy/vim-illuminate",
 
   -- LSP
   {

@@ -1,4 +1,8 @@
-/yarn/
-/iterm2/
-/neofetch/
-/htop/
+*
+!direnv/
+!fish/
+!kitty/
+!lazygit/
+!nvim/
+!pypoetry/
+!tmux/

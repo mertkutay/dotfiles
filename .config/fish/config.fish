@@ -55,7 +55,7 @@ if test -d $PYENV_ROOT
   add_path "$PYENV_ROOT/bin"
 end
 
-set --universal nvm_default_version v16.16.0
+set --universal nvm_default_version v16.14.0
 
 set -x LANG en_US.UTF-8
 set -x LC_ALL en_US.UTF-8
