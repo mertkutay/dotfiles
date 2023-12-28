@@ -79,6 +79,11 @@ add_ld_library $COPPELIASIM_ROOT
 add_ld_library $HOME/.mujoco/mujoco210/bin
 add_ld_library /usr/lib/nvidia
 
+set GC_SDK $HOME/google-cloud-sdk/path.fish.inc
+if test -f $GC_SDK
+  . $GC_SDK
+end
+
 function t
   if [ "$TERM_PROGRAM" != "vscode" ]; and test -z "$TMUX" -a -z "$SSH_CLIENT" -a -z "$SSH_TTY"
     set session_name "default"
@@ -152,3 +157,4 @@ if test "$TERM" = "dumb"
   function fish_greeting; end
   function fish_title; end
 end
+

@@ -33,12 +33,12 @@ require("lazy").setup({
     end,
   },
   {
-    "loctvl842/monokai-pro.nvim",
+    "srcery-colors/srcery-vim",
     config = function()
-      require("monokai-pro").setup({
-        background_clear = {},
-      })
-      vim.cmd([[colorscheme monokai-pro]])
+      vim.cmd([[
+        set t_Co=256
+        colorscheme srcery
+      ]])
     end,
   },
   {

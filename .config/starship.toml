@@ -2,4 +2,7 @@
 fish_style_pwd_dir_length = 1
 
 [aws]
-disabled=true
+disabled = true
+
+[gcloud]
+disabled = true

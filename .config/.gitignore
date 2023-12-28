@@ -1,8 +1,8 @@
 *
-!direnv/
-!fish/
-!kitty/
-!lazygit/
-!nvim/
-!pypoetry/
-!tmux/
+!/direnv**/**
+!/fish**/**
+!/kitty**/**
+!/lazygit**/**
+!/nvim**/**
+!/pypoetry**/**
+!/tmux**/**

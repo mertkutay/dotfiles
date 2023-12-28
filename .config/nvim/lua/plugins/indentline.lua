@@ -1,10 +1,15 @@
-require("indent_blankline").setup({
-  char = "▏",
-  show_current_context = true,
-  filetype_exclude = {
-    "help",
-    "packer",
-    "NvimTree",
-    "alpha",
+require("ibl").setup({
+  indent = { char = "▏" },
+  scope = {
+    show_start = false,
+    show_end = false,
+  },
+  exclude = {
+    filetypes = {
+      "help",
+      "packer",
+      "NvimTree",
+      "alpha",
+    },
   },
 })

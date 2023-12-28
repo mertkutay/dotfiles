@@ -47,8 +47,4 @@ require("nvim-treesitter.configs").setup({
       "Blue",
     },
   },
-  context_commentstring = {
-    enable = true,
-    enable_autocmd = false,
-  },
 })
