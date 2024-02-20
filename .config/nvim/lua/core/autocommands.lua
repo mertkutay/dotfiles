@@ -34,7 +34,7 @@ autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
   pattern = "*",
   callback = function()
     vim.cmd([[
-      if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif 
+      if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
     ]])
   end,
 })
@@ -59,5 +59,13 @@ autocmd("VimResized", {
   pattern = "*",
   callback = function()
     vim.cmd("tabdo wincmd =")
+  end,
+})
+
+autocmd({ "BufNewFile", "BufRead" }, {
+  pattern = { "*.mdx" },
+  callback = function()
+    local buf = vim.api.nvim_get_current_buf()
+    vim.api.nvim_buf_set_option(buf, "filetype", "markdown")
   end,
 })

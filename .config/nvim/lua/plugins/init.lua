@@ -124,7 +124,7 @@ require("lazy").setup({
   },
   "williamboman/mason-lspconfig.nvim",
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     config = function()
       require("plugins.lsp.null-ls")
     end,
