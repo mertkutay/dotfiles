@@ -2,31 +2,50 @@ xcode-select --install
 sudo softwareupdate --install-rosetta
 defaults write -g ApplePressAndHoldEnabled -bool false
 
+curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
-brew install fish
-chsh -s /opt/homebrew/bin/fish
 
 brew install \
-    coreutils stow \
-    pyenv go rust \
-    htop gotop lazygit spotify-tui \
-    wget tmux direnv gnupg  \
-    neovim iterm2 bluesnooze \
-    ripgrep fd fzf stylua \
-    libpq openssl ffmpeg \
-    jq pidof imagemagick neofetch fortune
+    stow \
+    fish \
+    starship \
+    tmux \
+    amethyst \
+    neovim \
+    direnv \
+    wget \
+    htop \
+    gnupg \
+    openssl \
+    ffmpeg \
+    pyenv \
+    pipx \
+    go \
+    rust \
+    lazygit \
+    fzf \
+    ripgrep \
+    fd \
+    jq \
+    git-delta \
+    bat \
+
+cd ~/.dotfiles
+stow .
+
+echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
+chsh -s /opt/homebrew/bin/fish
 
 set -Ux PYENV_ROOT $HOME/.pyenv
 set -U fish_user_paths $PYENV_ROOT/bin $fish_user_paths
-pyenv install 3.10.5
-pyenv global 3.10.5
-pip install flake8 black isort ipython
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
+pyenv install 3.11.8
+pyenv global 3.11.8
 
-curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+pipx install poetry ruff
 
-fisher install jorgebucaran/nvm.fish
-nvm install 16.16.0
-npm install -g yarn
-yarn global add prettier eslint
+curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher jorgebucaran/nvm.fish
+
+nvm install 16.20.0
+npm install -g yarn prettier eslint

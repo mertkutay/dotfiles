@@ -1,0 +1,73 @@
+set nostartofline
+set clipboard=unnamedplus
+set smartcase
+set ignorecase
+set hlsearch
+set number
+set scrolloff=1
+set sidescrolloff=5
+set timeoutlen=5000
+
+let mapleader=" "
+let maplocalleader=" "
+
+map <Space> <Nop>
+
+vmap < <gv
+vmap > >gv
+vmap p "_dP"
+
+xmap J :move '>+1<CR>gv-gv'
+xmap K :move '<-2<CR>gv-gv'
+
+nmap <C-Up> :resize -2<CR>
+nmap <C-Down> :resize +2<CR>
+nmap <C-Left> :vertical resize -2<CR>
+nmap <C-Right> :vertical resize +2<CR>
+nmap <Tab> :bnext<CR>
+nmap <S-Tab> :bprevious<CR>
+nmap gd <Action>(GotoDeclaration)
+nmap gD <Action>(GotoDeclaration)
+nmap gi <Action>(GotoImplementation)
+nmap gl <Action>(ActivateProblemsViewToolWindow)
+nmap gr <Action>(FindUsages)
+nmap K <Action>(ShowHoverInfo)
+nmap [d <Action>(GotoNextError)
+nmap ]d <Action>(GotoPreviousError)
+nmap <leader>c <Action>(CloseContent)
+nmap <leader>e :NERDTreeToggle<CR>
+nmap <leader>f <Action>(GotoFile)
+nmap <leader>F <Action>(FindInPath)
+nmap <leader>q <Action>(Exit)
+nmap <leader>w <Action>(SaveAll)
+
+"map <leader>d <Action>(Debug)
+"map \b <Action>(ToggleLineBreakpoint)
+
+nmap <leader>gB <Action>(Annotate)
+nmap <leader>gg <Action>(ActivateVersionControlToolWindow)
+
+nmap <leader>ld <Action>(GotoDeclaration)
+nmap <leader>lD <Action>(GotoDeclaration)
+nmap <leader>lf <Action>(ReformatCode)
+nmap <leader>lh <Action>(ShowHoverInfo)
+nmap <leader>li <Action>(GotoImplementation)
+nmap <leader>lj <Action>(GotoNextError)
+nmap <leader>lk <Action>(GotoPreviousError)
+nmap <leader>lq <Action>(ActivateProblemsViewToolWindow)
+nmap <leader>lr <Action>(FindUsages)
+nmap <leader>lR <Action>(RenameElement)
+nmap <leader>ls <Action>(GotoSymbol)
+nmap <leader>lS <Action>(GotoSymbol)
+
+nmap <leader>th <Action>(ActivateTerminalToolWindow)
+
+set easymotion
+set sneak
+set nerdtree
+set vim-surround
+set vim-multiple-cursors
+set vim-commentary
+set vim-highlightedyank
+set which-key
+

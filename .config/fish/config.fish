@@ -55,7 +55,7 @@ if test -d $PYENV_ROOT
   add_path "$PYENV_ROOT/bin"
 end
 
-set --universal nvm_default_version v16.14.0
+set --universal nvm_default_version v16.20.0
 
 set -x LANG en_US.UTF-8
 set -x LC_ALL en_US.UTF-8
@@ -85,7 +85,9 @@ if test -f $GC_SDK
 end
 
 function t
-  if [ "$TERM_PROGRAM" != "vscode" ]; and test -z "$TMUX" -a -z "$SSH_CLIENT" -a -z "$SSH_TTY"
+  if [ "$TERM_PROGRAM" != "vscode" ]; \
+    and [ "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]; \
+    and test -z "$TMUX" -a -z "$SSH_CLIENT" -a -z "$SSH_TTY"
     set session_name "default"
     tmux has-session -t=$session_name 2> /dev/null
     if test $status -eq 1
