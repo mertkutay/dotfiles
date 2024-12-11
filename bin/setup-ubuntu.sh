@@ -1,5 +1,4 @@
-sudo add-apt-repository ppa:neovim-ppa/unstable -y
-curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt update
 sudo apt upgrade -y
 
@@ -18,24 +17,11 @@ sudo apt install -o Dpkg::Options::="--force-overwrite" \
     pkg-config \
     autoconf \
     cmake \
-    libpq-dev \
-    libncurses-dev \
-    libsqlite3-dev \
-    libreadline-dev \
-    libbz2-dev \
-    libffi-dev \
-    libssl-dev \
-    liblzma-dev \
-    libgtk-3-dev \
     python3-pip \
-    nodejs \
     default-jre \
     default-jdk \
     zip \
-    fortune \
     direnv \
-    emacs \
-    neovim \
     fish \
     swig \
     tree -y
@@ -48,11 +34,14 @@ echo \
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
 sudo usermod -aG docker $USER
-newgrp docker
 
 LOCAL_BIN=$HOME/.local/bin
 mkdir -p $LOCAL_BIN
 export PATH="$PATH:$LOCAL_BIN"
+
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+sudo rm -rf /opt/nvim
+sudo tar -C /opt -xzf nvim-linux64.tar.gz
 
 if grep -qi microsoft /proc/version; then
   curl -sLo/tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
@@ -61,15 +50,16 @@ if grep -qi microsoft /proc/version; then
   sudo mv /tmp/win32yank.exe /usr/local/bin/
 fi
 
-curl -sSL https://install.python-poetry.org | python3 -
-git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+curl -f https://zed.dev/install.sh | sh
 
 arch=$(dpkg --print-architecture)
 curl -OL https://go.dev/dl/go1.18.4.linux-$arch.tar.gz
 sudo tar -C /usr/local -xvf go1.18.4.linux-$arch.tar.gz
 rm go1.18.4.linux-$arch.tar.gz
 
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 export PATH="$PATH:/usr/local/go/bin:$HOME/.cargo/bin"
 
@@ -80,8 +70,7 @@ cargo install starship \
     git-delta \
     fd-find \
     ripgrep \
-    bat \
-    stylua
+    bat
 
 sudo chsh -s /usr/bin/fish $(whoami)
 

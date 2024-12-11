@@ -27,10 +27,9 @@ set cursorline
 set scrolloff=1
 set sidescrolloff=5
 set list
-set listchars=tab:→ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+set listchars=eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 set shortmess+=c
 set guifont=monospace:h17
-set termguicolors
 set pumheight=10
 set foldlevel=99
 set foldmethod=expr
@@ -59,10 +58,6 @@ xnoremap K :move '<-2<CR>gv-gv'
 map <leader>c :bp<bar>sp<bar>bn<bar>bd<CR>
 map <leader>q :q<CR>
 map <leader>w :w!<CR>
-
-" Theme
-set termguicolors
-set background=dark
 
 " Remember cursor position between vim sessions
 autocmd BufReadPost *

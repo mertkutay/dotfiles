@@ -50,20 +50,12 @@ if test -d $brew_prefix
   add_flags "$brew_prefix/opt/libpq"
 end
 
-set PYENV_ROOT $HOME/.pyenv
-if test -d $PYENV_ROOT
-  add_path "$PYENV_ROOT/bin"
-end
-
-set --universal nvm_default_version v16.20.0
+set --universal nvm_default_version v20.18.1
 
 set -x LANG en_US.UTF-8
 set -x LC_ALL en_US.UTF-8
 
 set -x EDITOR "nvim"
-
-set -x WORKON_HOME $HOME/.virtualenvs
-set -x PROJECT_HOME $HOME/projects
 
 set -x COMPOSE_DOCKER_CLI_BUILD 1
 set -x DOCKER_BUILDKIT 1
@@ -102,10 +94,6 @@ function current_branch
   set ref (git symbolic-ref HEAD 2> /dev/null); or \
   set ref (git rev-parse --short HEAD 2> /dev/null); or return
   echo $ref | sed s-refs/heads/--
-end
-
-if status is-login
-  pyenv init --path | source
 end
 
 if status is-interactive
