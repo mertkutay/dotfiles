@@ -24,6 +24,9 @@ sudo apt install -o Dpkg::Options::="--force-overwrite" \
     direnv \
     fish \
     swig \
+    fd-find \
+    ripgrep \
+    bat \
     tree -y
 
 sudo mkdir -p /etc/apt/keyrings
@@ -42,6 +45,7 @@ export PATH="$PATH:$LOCAL_BIN"
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
 sudo rm -rf /opt/nvim
 sudo tar -C /opt -xzf nvim-linux64.tar.gz
+rm nvim-linux64.tar.gz
 
 if grep -qi microsoft /proc/version; then
   curl -sLo/tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
@@ -63,14 +67,16 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 export PATH="$PATH:/usr/local/go/bin:$HOME/.cargo/bin"
 
-go install github.com/jesseduffield/lazygit@latest
-go install github.com/xxxserxxx/gotop/v4/cmd/gotop@v4.1.2
+LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
+curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+tar xf lazygit.tar.gz lazygit
+sudo install lazygit -D -t /usr/local/bin/
 
-cargo install starship \
-    git-delta \
-    fd-find \
-    ripgrep \
-    bat
+curl -sS https://starship.rs/install.sh | sh
+
+curl -LO https://github.com/dandavison/delta/releases/download/0.18.2/git-delta_0.18.2_amd64.deb
+sudo dpkg -i git-delta_0.18.2_amd64.deb
+rm git-delta_0.18.2_amd64.deb
 
 sudo chsh -s /usr/bin/fish $(whoami)
 
